@@ -1,0 +1,108 @@
+{
+  "config_version": "h2-v7-gpt-5.6-sol-full-trajectory-v1",
+  "experiment_id": "H2-V7-GPT-5.6-Sol-6Source",
+  "protocol_id": "H2-V7-GPT-5.6-Sol-6Source-v1.0",
+  "batch_id": "h2-v7-gpt56sol-6source-b20-b30-20261022-v1",
+  "output_prefix": "H2-V7-GPT-5.6-Sol-6Source_",
+  "source_config_path": "configs/h1_deepseek_v4_pro_9source_v1.json",
+  "source_manifest_path": "formal_H1_multitask_v3_2_freeze_manifest.json",
+  "source_selection_record": "formal_H1_multitask_v3_2_deepseek_v4_pro_9source_v1_selection.json",
+  "trusted_route_record": "results/formal_H1_multitask_v3_2_gpt_5_6_sol_source10_recovery_v2_20261020T142332707573Z/requests.json",
+  "provider": {
+    "name": "zhizengzeng",
+    "interface": "openai-compatible-chat-completions-v1",
+    "base_url": "https://api.zhizengzeng.com/v1",
+    "model_id": "gpt-5.6-sol",
+    "reasoning_effort": "medium",
+    "output_token_parameter": "max_completion_tokens",
+    "max_completion_tokens": 2400,
+    "temperature": 0.0,
+    "send_temperature": true,
+    "timeout_seconds": 360,
+    "tool_choice": "auto",
+    "parallel_tool_calls": false,
+    "stream": false,
+    "credential_environment": "H1_API_KEY",
+    "accepted_response_model_ids": [
+      "gpt-5.6-sol"
+    ]
+  },
+  "source_count": 6,
+  "source_indices": [
+    1,
+    6,
+    11,
+    16,
+    21,
+    26
+  ],
+  "family_counts": {
+    "WEB": 2,
+    "API": 2,
+    "SERVICE": 2
+  },
+  "source_selection_rule": {
+    "rule": "existing fixed source order; first two admitted sources within each task family",
+    "family_order": [
+      "WEB",
+      "API",
+      "SERVICE"
+    ],
+    "uses_historical_outcomes": false,
+    "generates_new_sources": false
+  },
+  "states": [
+    "RECON",
+    "EXPLOITATION",
+    "VERIFICATION"
+  ],
+  "strategies": [
+    "FIXED_DEP_V6",
+    "STATE_AWARE_V7"
+  ],
+  "mapping": {
+    "FIXED_DEP_V6": {
+      "RECON": "DEPENDENCY_V6",
+      "EXPLOITATION": "DEPENDENCY_V6",
+      "VERIFICATION": "DEPENDENCY_V6"
+    },
+    "STATE_AWARE_V7": {
+      "RECON": "DEPENDENCY_V6",
+      "EXPLOITATION": "EVIDENCE_NEW_V3",
+      "VERIFICATION": "BRANCH_NEW"
+    }
+  },
+  "budgets": [
+    20,
+    30
+  ],
+  "budget_unit": "provider_calls per independent full trajectory",
+  "trajectory_count": 24,
+  "pair_count": 12,
+  "maximum_followups_per_trap": 12,
+  "exposure_contract": "pre-effect-v1",
+  "technical_retries": 0,
+  "automatic_recovery": false,
+  "automatic_source_replacement": false,
+  "per_trajectory_max_total_tokens": 800000,
+  "batch_maximum_requests": 600,
+  "batch_maximum_total_tokens": 19200000,
+  "estimated_input_token_divisor": 3,
+  "maximum_process_address_space_bytes": 2147483648,
+  "memory_warning_rss_bytes": 805306368,
+  "memory_hard_rss_bytes": 1610612736,
+  "maximum_provider_response_bytes": 8388608,
+  "cost_estimation": {
+    "basis": "OpenAI public list price in USD; Zhizengzeng actual billing is not asserted",
+    "currency": "USD",
+    "rates_usd_per_million_tokens": {
+      "input": 4.0,
+      "cached_input": 0.4,
+      "cache_write": 5.0,
+      "output": 20.0
+    }
+  },
+  "analysis_role": "six-source small-sample exploratory H2 validation",
+  "formal_H1_modified": false,
+  "other_models_modified": false
+}

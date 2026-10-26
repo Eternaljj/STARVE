@@ -1,0 +1,13 @@
+task_id,branch_position_1,branch_position_2,branch_position_3
+v6-2-capacity-coverage-01,BASELINE,ALL_AT_ONCE,INCREMENTAL
+v6-2-capacity-coverage-02,BASELINE,INCREMENTAL,ALL_AT_ONCE
+v6-2-capacity-coverage-03,ALL_AT_ONCE,BASELINE,INCREMENTAL
+v6-2-capacity-coverage-04,ALL_AT_ONCE,INCREMENTAL,BASELINE
+v6-2-capacity-session-01,INCREMENTAL,BASELINE,ALL_AT_ONCE
+v6-2-capacity-session-02,INCREMENTAL,ALL_AT_ONCE,BASELINE
+v6-2-capacity-session-03,BASELINE,ALL_AT_ONCE,INCREMENTAL
+v6-2-capacity-session-04,BASELINE,INCREMENTAL,ALL_AT_ONCE
+v6-2-capacity-freshness-01,ALL_AT_ONCE,BASELINE,INCREMENTAL
+v6-2-capacity-freshness-02,ALL_AT_ONCE,INCREMENTAL,BASELINE
+v6-2-capacity-freshness-03,INCREMENTAL,BASELINE,ALL_AT_ONCE
+v6-2-capacity-freshness-04,INCREMENTAL,ALL_AT_ONCE,BASELINE

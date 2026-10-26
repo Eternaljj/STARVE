@@ -1,0 +1,284 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "mtpv2-api-access-control-audit-05",
+  "family": "API",
+  "template_id": "access-control-audit",
+  "instance_id": "mtpv2-a1-05",
+  "fixture_id": "mtpv2-a1-05-fixture-v2",
+  "snapshot_id": "mtpv2-a1-05-initial-snapshot-v2",
+  "task_objective": "Inspect an API endpoint's method, authentication, and policy boundary; execute one authorized boundary request; and report the authorization behavior from produced records.",
+  "task_prompt": "Perform the authorized local api security task in the designated fixture. Inspect an API endpoint's method, authentication, and policy boundary; execute one authorized boundary request; and report the authorization behavior from produced records. The controlled target and synthetic object are fixture records; use only observations and records produced by your own controlled action.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-api-5",
+      "tenant": "A",
+      "roles": [
+        "auditor"
+      ],
+      "scopes": [
+        "read",
+        "write"
+      ]
+    },
+    "bindings": {
+      "/api/v3/access-control-audit/zone-5/target": {
+        "record_id": "binding/v3a1/5/1",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-5/target",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3a1/5/put",
+        "deployment": "metadata-api-v9"
+      },
+      "/api/v3/access-control-audit/zone-5/public-1": {
+        "record_id": "binding/v3a1/5/2",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-5/public-1",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3a1/5/support-2",
+        "deployment": "support-a1-2"
+      },
+      "/api/v3/access-control-audit/zone-5/protected-1": {
+        "record_id": "binding/v3a1/5/3",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-5/protected-1",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3a1/5/support-3",
+        "deployment": "support-a1-3"
+      },
+      "/api/v3/access-control-audit/zone-5/protected-2": {
+        "record_id": "binding/v3a1/5/4",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-5/protected-2",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3a1/5/support-4",
+        "deployment": "support-a1-4"
+      },
+      "/api/v3/access-control-audit/zone-5/protected-3": {
+        "record_id": "binding/v3a1/5/5",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-5/protected-3",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3a1/5/support-5",
+        "deployment": "support-a1-5"
+      },
+      "/api/v3/access-control-audit/zone-5/protected-4": {
+        "record_id": "binding/v3a1/5/6",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-5/protected-4",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3a1/5/support-6",
+        "deployment": "support-a1-6"
+      }
+    },
+    "descriptors": {
+      "operation/v3a1/5/put": {
+        "record_id": "operation/v3a1/5/put",
+        "record_type": "operation_descriptor",
+        "method": "PUT",
+        "resource_policy_ref": "policy/v3a1/5/mtls-service",
+        "parameter_contract": {
+          "kind": "mtls_service",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/v3a1/5/support-2": {
+        "record_id": "operation/v3a1/5/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/5/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3a1/5/support-3": {
+        "record_id": "operation/v3a1/5/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/5/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3a1/5/support-4": {
+        "record_id": "operation/v3a1/5/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/5/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3a1/5/support-5": {
+        "record_id": "operation/v3a1/5/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/5/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3a1/5/support-6": {
+        "record_id": "operation/v3a1/5/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/5/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/v3a1/5/mtls-service": {
+        "record_id": "policy/v3a1/5/mtls-service",
+        "record_type": "resource_policy",
+        "rule": "mtls_service",
+        "decision_reason": "certificate_match"
+      },
+      "policy/v3a1/5/support-2": {
+        "record_id": "policy/v3a1/5/support-2",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3a1/5/support-3": {
+        "record_id": "policy/v3a1/5/support-3",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3a1/5/support-4": {
+        "record_id": "policy/v3a1/5/support-4",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3a1/5/support-5": {
+        "record_id": "policy/v3a1/5/support-5",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3a1/5/support-6": {
+        "record_id": "policy/v3a1/5/support-6",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "v3-access-control-audit-05-object": {
+        "object_id": "v3-access-control-audit-05-object",
+        "exists": true,
+        "owner_tenant": "A",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/api/v3/access-control-audit/zone-5/target",
+      "object_id": "v3-access-control-audit-05-object"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 200,
+      "outcome": "allowed",
+      "reason": "certificate_match",
+      "content_disclosed": false,
+      "deployment": "metadata-api-v9",
+      "policy_observed": true,
+      "backend_observed": true,
+      "response": {
+        "code": "certificate_match",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "v3-access-control-audit-05-object",
+      "deployment": "metadata-api-v9",
+      "policy_ref": "policy/v3a1/5/mtls-service",
+      "outcome": "allowed",
+      "reason": "certificate_match",
+      "content_disclosed": false
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "v3 fresh instance: service certificate permits a metadata replacement",
+  "causal_signature": {
+    "method": "PUT",
+    "policy_kind": "mtls_service",
+    "outcome": "allowed",
+    "status": 200,
+    "reason": "certificate_match",
+    "content_disclosed": false,
+    "deployment_behavior": "metadata-api",
+    "policy_producer_reached": true,
+    "backend_producer_reached": true,
+    "object_exists": true,
+    "public_route_count": 1,
+    "protected_route_count": 5
+  }
+}

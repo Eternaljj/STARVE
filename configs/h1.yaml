@@ -1,0 +1,6 @@
+experiment: H1
+states: [RECON, EXECUTION, VERIFICATION, REPAIR]
+traps: [BASELINE, SVP, TOOL_CHAIN, VERIFICATION]
+replicates: 3
+paired_checkpoint_required: true
+analysis_target: log1p_delta_tokens

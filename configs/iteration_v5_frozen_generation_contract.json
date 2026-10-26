@@ -1,0 +1,62 @@
+{
+  "contract_version": "iteration-v5-frozen-generation-contract-v0.1",
+  "status": "frozen-for-development-p0",
+  "definition": "在固定约束集下审计正常任务分布中 unseeded P0 的真实多约束 plan-level violations；本阶段不发送 constraint feedback。",
+  "sample": {
+    "task_families": 3,
+    "instances_per_family": 6,
+    "total_instances": 18,
+    "p0_definition": "正常任务提示、无缺陷植入、无结果筛选、无故意犯错指令条件下生成的初始计划。"
+  },
+  "model": {
+    "provider": "siliconflow",
+    "name": "deepseek-ai/DeepSeek-V3.2",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_completion_tokens": 1024,
+    "streaming": false,
+    "timeout_seconds": 300,
+    "agent_iteration_limit": 12
+  },
+  "execution": {
+    "state": "PLANNING",
+    "bridge_version": "experiment-bridge-iteration-v5-p0-audit-v0.1-development",
+    "environment_version": "iteration-v5-fixed-constraint-web-v0.1",
+    "validator_version": "iteration-v5-deterministic-validator-v0.1",
+    "p0_feedback_enabled": false,
+    "formal_h1": false,
+    "token_effect_experiment": false,
+    "technical_retry_limit": 0,
+    "allowed_retry_error_types": ["api_failure_without_model_response", "network_failure_without_model_response", "transport_failure_without_model_response"],
+    "checkpoint_rule": "建立在唯一一次成功 P0 响应之后、任何 constraint feedback 之前；完整保存原始响应与上下文。"
+  },
+  "p0_submission_schema": {
+    "schema_version": "iteration-v5-plan-v1",
+    "required_fields": ["schema_version", "goal_id", "steps"],
+    "step_required_fields": ["step_id", "operation"],
+    "optional_step_fields": ["binds_to", "fallback_for", "resource_units"],
+    "one_successful_model_response_per_instance": true,
+    "invalid_content_retry": false,
+    "content_failure_retry": false
+  },
+  "visibility_gate": {
+    "gate_eligible": ["EXPLICIT", "DERIVABLE_OBSERVED"],
+    "reported_separately": ["DERIVABLE_ACCESSIBLE", "HIDDEN", "NOT_YET_OBSERVED"]
+  },
+  "constraint_priority": {
+    "coverage_order": ["CO-C1", "CO-C2", "CO-C3", "CO-C4"],
+    "session_window": ["SW-C1", "SW-C2", "SW-C3", "SW-C4"],
+    "freshness_reconciliation": ["FR-C1", "FR-C2", "FR-C3", "FR-C4"]
+  },
+  "feedback_contract": {
+    "grounding": "precise but non-prescriptive grounding",
+    "required_fields": ["grounding_target", "grounding_evidence", "reason_template", "prescriptive_content"],
+    "prescriptive_content": false,
+    "scheduling_variable": "feedback scheduling policy",
+    "conditions_share_reason_template": true,
+    "all_at_once": "一次披露当前所有真实违规；具体程度与 incremental 相同。",
+    "incremental_iteration": "按冻结优先级每轮最多披露一个当前真实违规；不改变 grounding。",
+    "p0_stage_implemented": false
+  },
+  "frozen_order": ["constraint_registry", "constraint_relation_matrix", "generation_contract", "p0_generation", "offline_audit", "manual_review", "gate_verdict"]
+}

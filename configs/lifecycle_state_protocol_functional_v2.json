@@ -1,0 +1,58 @@
+{
+  "protocol_version": "lifecycle-state-functional-v2.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-09-26T03:11:58Z",
+  "effective_scope": "future freshly collected trajectories explicitly declaring this protocol",
+  "classification_unit": "current functional purpose at a non-terminal checkpoint",
+  "states": {
+    "RECON": {
+      "definition": "当前主要目的为获取新的环境事实、减少未知信息。",
+      "question": "我还需要知道什么？",
+      "required_evidence": ["明确的未知信息或信息需求", "当前行为如何获取对应的新环境事实"],
+      "allowed": ["已有粗略或详细计划", "已有具体目标、操作与参数", "已 committed 的信息获取调用", "尚无先前工具观察但已有真实信息获取行为"]
+    },
+    "PLANNING": {
+      "definition": "已基于已有观察，正在比较、选择、细化或调整后续行动路径；重点为行动决策，关键行动尚未执行。",
+      "question": "根据我已经知道的，我下一步该怎么做？",
+      "required_evidence": ["决策所依赖的已获得观察", "当前比较、选择、细化或调整行动路径的证据", "相关关键行动尚未执行"],
+      "not_required": ["submit_current_plan 调用", "非空 current_plan", "显式候选列表"],
+      "insufficient_alone": ["复述任务步骤", "计划工具名称", "尚无观察支撑的泛化行动顺序", "为解决未知事实而查询环境"]
+    },
+    "EXPLOITATION": {
+      "definition": "当前主要目的为实施任务关键行动，具体行动已 committed，但关键效果尚未产生。",
+      "required_evidence": ["真实已提交的任务关键行动", "该行动对应的关键效果定义", "关键效果尚未产生"],
+      "insufficient_alone": ["具体操作或参数", "任意 pending tool call", "读取信息即将返回", "工具名称含 execute 或 verify"]
+    },
+    "VERIFICATION": {
+      "definition": "执行结果已获得，当前主要目的为判断结果含义、真实性或是否满足目标，最终判断尚未完成。",
+      "required_evidence": ["已有相关执行结果", "当前待判断的 claim 或结果问题", "尚未完成的结果解释、核验或融合工作"],
+      "allowed": ["为判断已有结果而查询新证据", "为核验已有 claim 而作独立测量"]
+    }
+  },
+  "classification_rules": [
+    "只依据保存边界前已可观察的行为目的与任务语义，不使用未来结果、Trap 内容或资源指标",
+    "不得以 plan 存在、动作具体程度、工具名称或固定执行顺序直接赋 State",
+    "State 可以跳过、重复、交错，无固定单向转移要求",
+    "同一工具可在不同功能目的下对应不同 State",
+    "行为目的与 committed/pending/result_available 等执行时机分别记录",
+    "存在多个目的时依据当前主要功能及证据判断；无法区分则记 UNCERTAIN 或 NOT_EVALUABLE 并排除 State 样本，不强行赋标签",
+    "UNCERTAIN 和 NOT_EVALUABLE 为审计状态，不是新增 lifecycle State",
+    "State 判定与机制 applicability 分开；不得按目标机制或样本配额选择 State"
+  ],
+  "checkpoint_record_required": [
+    "state_protocol_version", "checkpoint_id", "trajectory_id", "boundary_event_index",
+    "state_or_audit_status", "current_behavior", "functional_purpose", "evidence_refs",
+    "known_observations", "unresolved_question_or_decision", "action_phase",
+    "task_key_effect", "key_effect_available", "terminal", "decision_space", "classification_reason"
+  ],
+  "checkpoint_admission": [
+    "原始 history、工具事件与环境快照可追溯并可 snapshot/restore",
+    "非 terminal；仍有真实自主后续决策或动作空间",
+    "保存点位于干预前且不含 Trap 注入结果",
+    "不补写计划、历史、已提交动作或额外前提",
+    "分类依据来自当前边界可见证据；隐藏 oracle 仅核验任务事实，不代替 Agent 行为目的证据"
+  ],
+  "historical_policy": "不重标、覆盖或将历史轨迹重新计入正式数据；跨版本统计不得直接合并",
+  "mechanism_policy": "不改变四机制协议、evaluator、scheduler、termination 或 DEPENDENCY_V4 的四 State causal roles；新 State 标签不自动证明旧 binding 合法",
+  "change_policy": "本版本禁止覆盖修改；后续语义变更须新增 State protocol version 并记录差异"
+}

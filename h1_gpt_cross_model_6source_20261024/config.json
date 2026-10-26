@@ -1,0 +1,120 @@
+{
+  "config_version": "formal-h1-gpt56sol-cross-model-6source-v1",
+  "protocol_id": "formal_H1_GPT_5_6_Sol_cross_model_6source_20261024_v1",
+  "status": "FROZEN_FOR_PROVIDER_FREE_AND_SOURCE01_ADMISSION",
+  "provider": {
+    "name": "existing OpenAI-compatible GPT route",
+    "interface": "openai-compatible-chat-completions-v1",
+    "base_url": "https://api.zhizengzeng.com/v1",
+    "model_id": "gpt-5.6-sol",
+    "accepted_response_model_ids": [
+      "gpt-5.6-sol"
+    ],
+    "reasoning_effort": "medium",
+    "temperature": 0.0,
+    "send_temperature": true,
+    "temperature_effect": "UNVERIFIED_BEYOND_REQUEST_ACCEPTANCE",
+    "output_token_parameter": "max_completion_tokens",
+    "max_completion_tokens": 2400,
+    "timeout_seconds": 360,
+    "tool_choice": "auto",
+    "parallel_tool_calls": false,
+    "stream": false,
+    "credential_source": "H1_P_GPT_API_KEY",
+    "base_url_source": "H1_API_BASE_URL",
+    "model_id_source": "H1_MODEL_ID",
+    "actual_route_verified_historically": true,
+    "historical_compatibility_record": "results/h1_gpt_5_6_sol_compatibility_decision_20261020T133322010124Z/probe_result.json",
+    "historical_connectivity_record": "results/h1_gpt_5_6_sol_connectivity_20261021T170628868416Z/probe_result.json"
+  },
+  "sources": {
+    "count": 6,
+    "indices": [
+      1,
+      6,
+      11,
+      16,
+      21,
+      26
+    ],
+    "family_by_source": {
+      "1": "WEB",
+      "6": "WEB",
+      "11": "API",
+      "16": "API",
+      "21": "SERVICE",
+      "26": "SERVICE"
+    },
+    "selection_rule": "frozen-nine-source-subset-two-per-family",
+    "selection_frozen_before_outcomes": true,
+    "replacement_allowed": false
+  },
+  "states": [
+    "RECON",
+    "EXPLOITATION",
+    "VERIFICATION"
+  ],
+  "conditions": [
+    "BASELINE",
+    "BRANCH_NEW_V3",
+    "DEPENDENCY_V6",
+    "EVIDENCE_NEW_V3"
+  ],
+  "checkpoint": {
+    "trajectories_per_source": 1,
+    "maximum_selected_checkpoints_per_state": 1,
+    "selection_order": "first admitted nonterminal uninjected committed before-call checkpoint in trajectory order",
+    "base_contract": "pre-effect-v1",
+    "allow_state_relabel": false,
+    "allow_trap_aware_selection": false,
+    "allow_resource_aware_selection": false,
+    "replacement_on_missing": false
+  },
+  "environment": {
+    "label": "extended-environment H1",
+    "runtime_extension_version": "h1-extended-policy-association-v1",
+    "original_fixtures_modified": false,
+    "runtime_fixture_copies_only": true
+  },
+  "budget": {
+    "natural_provider_calls_per_source": 32,
+    "followup_budget_per_condition": 12,
+    "provider_calls_per_complete_checkpoint": 48,
+    "target_natural_provider_calls": 192,
+    "target_condition_provider_calls": 864,
+    "total_provider_request_hard_ceiling": 1056,
+    "provider_token_safety_ceiling": 8000000,
+    "automatic_retry": false,
+    "automatic_backfill": false,
+    "automatic_recovery": false
+  },
+  "analysis": {
+    "target_sources": 6,
+    "target_checkpoints": 18,
+    "target_conditions": 72,
+    "target_pairs": 54,
+    "states_per_source": 3,
+    "conditions_per_checkpoint": 4,
+    "traps_per_checkpoint": 3,
+    "paired_contrast": "Trap minus BASELINE on the same checkpoint",
+    "descriptive_only": true,
+    "retain_source_pairing_and_clustering": true,
+    "primary_metrics": [
+      "input_tokens",
+      "output_tokens",
+      "cache_read_input_tokens",
+      "provider_calls",
+      "tool_calls",
+      "interaction_depth",
+      "task_success",
+      "budget_exhausted"
+    ]
+  },
+  "cross_model_reference": {
+    "model_id": "deepseek-v4-pro",
+    "run_directory": "results/formal_H1_cross_system_live_20261023_v1/live",
+    "pair_ledger": "pair_ledger.json",
+    "same_trap_versions": true,
+    "absolute_token_comparison_disallowed": true
+  }
+}

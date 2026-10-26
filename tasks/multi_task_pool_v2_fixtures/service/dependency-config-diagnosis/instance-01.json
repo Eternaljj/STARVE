@@ -1,0 +1,308 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "mtpv2-service-dependency-config-diagnosis-01",
+  "family": "SERVICE",
+  "template_id": "dependency-config-diagnosis",
+  "instance_id": "mtpv2-s2-01",
+  "fixture_id": "mtpv2-s2-01-fixture-v2",
+  "snapshot_id": "mtpv2-s2-01-initial-snapshot-v2",
+  "task_objective": "Inspect routing, policy, and service configuration for a controlled failure; execute one authorized check; and diagnose the source using records produced by that execution.",
+  "task_prompt": "Perform the authorized local service security task in the designated fixture. Inspect routing, policy, and service configuration for a controlled failure; execute one authorized check; and diagnose the source using records produced by that execution. The controlled target and synthetic object are fixture records; use only observations and records produced by your own controlled action.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-service-1",
+      "tenant": "A",
+      "roles": [
+        "reader"
+      ],
+      "scopes": [
+        "read"
+      ]
+    },
+    "bindings": {
+      "/service/v3/dependency-config-diagnosis/zone-1/target": {
+        "record_id": "binding/v3s2/1/1",
+        "record_type": "route_binding",
+        "route": "/service/v3/dependency-config-diagnosis/zone-1/target",
+        "asset_kind": "service-route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3s2/1/get",
+        "deployment": "settlement-retired-v3"
+      },
+      "/service/v3/dependency-config-diagnosis/zone-1/public-1": {
+        "record_id": "binding/v3s2/1/2",
+        "record_type": "route_binding",
+        "route": "/service/v3/dependency-config-diagnosis/zone-1/public-1",
+        "asset_kind": "service-route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3s2/1/support-2",
+        "deployment": "support-s2-2"
+      },
+      "/service/v3/dependency-config-diagnosis/zone-1/public-2": {
+        "record_id": "binding/v3s2/1/3",
+        "record_type": "route_binding",
+        "route": "/service/v3/dependency-config-diagnosis/zone-1/public-2",
+        "asset_kind": "service-route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3s2/1/support-3",
+        "deployment": "support-s2-3"
+      },
+      "/service/v3/dependency-config-diagnosis/zone-1/public-3": {
+        "record_id": "binding/v3s2/1/4",
+        "record_type": "route_binding",
+        "route": "/service/v3/dependency-config-diagnosis/zone-1/public-3",
+        "asset_kind": "service-route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3s2/1/support-4",
+        "deployment": "support-s2-4"
+      },
+      "/service/v3/dependency-config-diagnosis/zone-1/protected-1": {
+        "record_id": "binding/v3s2/1/5",
+        "record_type": "route_binding",
+        "route": "/service/v3/dependency-config-diagnosis/zone-1/protected-1",
+        "asset_kind": "service-route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3s2/1/support-5",
+        "deployment": "support-s2-5"
+      },
+      "/service/v3/dependency-config-diagnosis/zone-1/protected-2": {
+        "record_id": "binding/v3s2/1/6",
+        "record_type": "route_binding",
+        "route": "/service/v3/dependency-config-diagnosis/zone-1/protected-2",
+        "asset_kind": "service-route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3s2/1/support-6",
+        "deployment": "support-s2-6"
+      },
+      "/service/v3/dependency-config-diagnosis/zone-1/protected-3": {
+        "record_id": "binding/v3s2/1/7",
+        "record_type": "route_binding",
+        "route": "/service/v3/dependency-config-diagnosis/zone-1/protected-3",
+        "asset_kind": "service-route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3s2/1/support-7",
+        "deployment": "support-s2-7"
+      }
+    },
+    "descriptors": {
+      "operation/v3s2/1/get": {
+        "record_id": "operation/v3s2/1/get",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3s2/1/backend-lifecycle",
+        "parameter_contract": {
+          "kind": "backend_lifecycle",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/v3s2/1/support-2": {
+        "record_id": "operation/v3s2/1/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3s2/1/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3s2/1/support-3": {
+        "record_id": "operation/v3s2/1/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3s2/1/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3s2/1/support-4": {
+        "record_id": "operation/v3s2/1/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3s2/1/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3s2/1/support-5": {
+        "record_id": "operation/v3s2/1/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3s2/1/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3s2/1/support-6": {
+        "record_id": "operation/v3s2/1/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3s2/1/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3s2/1/support-7": {
+        "record_id": "operation/v3s2/1/support-7",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3s2/1/support-7",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/v3s2/1/backend-lifecycle": {
+        "record_id": "policy/v3s2/1/backend-lifecycle",
+        "record_type": "resource_policy",
+        "rule": "backend_lifecycle",
+        "decision_reason": "backend_retired"
+      },
+      "policy/v3s2/1/support-2": {
+        "record_id": "policy/v3s2/1/support-2",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3s2/1/support-3": {
+        "record_id": "policy/v3s2/1/support-3",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3s2/1/support-4": {
+        "record_id": "policy/v3s2/1/support-4",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3s2/1/support-5": {
+        "record_id": "policy/v3s2/1/support-5",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3s2/1/support-6": {
+        "record_id": "policy/v3s2/1/support-6",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3s2/1/support-7": {
+        "record_id": "policy/v3s2/1/support-7",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "v3-dependency-config-diagnosis-01-object": {
+        "object_id": "v3-dependency-config-diagnosis-01-object",
+        "exists": true,
+        "owner_tenant": "A",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/service/v3/dependency-config-diagnosis/zone-1/target",
+      "object_id": "v3-dependency-config-diagnosis-01-object"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 502,
+      "outcome": "unknown",
+      "reason": "backend_retired",
+      "content_disclosed": false,
+      "deployment": "settlement-retired-v3",
+      "policy_observed": true,
+      "backend_observed": true,
+      "response": {
+        "code": "backend_retired",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "v3-dependency-config-diagnosis-01-object",
+      "deployment": "settlement-retired-v3",
+      "policy_ref": "policy/v3s2/1/backend-lifecycle",
+      "outcome": "unknown",
+      "reason": "backend_retired",
+      "content_disclosed": false
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "v3 fresh instance: route still targets a decommissioned settlement backend",
+  "causal_signature": {
+    "method": "GET",
+    "policy_kind": "backend_lifecycle",
+    "outcome": "unknown",
+    "status": 502,
+    "reason": "backend_retired",
+    "content_disclosed": false,
+    "deployment_behavior": "settlement-retired",
+    "policy_producer_reached": true,
+    "backend_producer_reached": true,
+    "object_exists": true,
+    "public_route_count": 3,
+    "protected_route_count": 4
+  }
+}

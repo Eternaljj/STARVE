@@ -1,0 +1,283 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "mtpv2-web-protected-route-validation-03",
+  "family": "WEB",
+  "template_id": "protected-route-validation",
+  "instance_id": "mtpv2-w2-03",
+  "fixture_id": "mtpv2-w2-03-fixture-v2",
+  "snapshot_id": "mtpv2-w2-03-initial-snapshot-v2",
+  "task_objective": "Locate a non-public Web route, resolve its deployed binding, execute the authorized validation request, and judge whether access follows the configured boundary.",
+  "task_prompt": "Perform the authorized local web security task in the designated fixture. Locate a non-public Web route, resolve its deployed binding, execute the authorized validation request, and judge whether access follows the configured boundary. The controlled target and synthetic object are fixture records; use only observations and records produced by your own controlled action.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-web-3",
+      "tenant": "A",
+      "roles": [
+        "reader"
+      ],
+      "scopes": [
+        "read"
+      ]
+    },
+    "bindings": {
+      "/web/v3/protected-route-validation/zone-3/target": {
+        "record_id": "binding/v3w2/3/1",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-3/target",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w2/3/put",
+        "deployment": "media-v9"
+      },
+      "/web/v3/protected-route-validation/zone-3/public-1": {
+        "record_id": "binding/v3w2/3/2",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-3/public-1",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w2/3/support-2",
+        "deployment": "support-w2-2"
+      },
+      "/web/v3/protected-route-validation/zone-3/public-2": {
+        "record_id": "binding/v3w2/3/3",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-3/public-2",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w2/3/support-3",
+        "deployment": "support-w2-3"
+      },
+      "/web/v3/protected-route-validation/zone-3/public-3": {
+        "record_id": "binding/v3w2/3/4",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-3/public-3",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w2/3/support-4",
+        "deployment": "support-w2-4"
+      },
+      "/web/v3/protected-route-validation/zone-3/protected-1": {
+        "record_id": "binding/v3w2/3/5",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-3/protected-1",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w2/3/support-5",
+        "deployment": "support-w2-5"
+      },
+      "/web/v3/protected-route-validation/zone-3/protected-2": {
+        "record_id": "binding/v3w2/3/6",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-3/protected-2",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w2/3/support-6",
+        "deployment": "support-w2-6"
+      }
+    },
+    "descriptors": {
+      "operation/v3w2/3/put": {
+        "record_id": "operation/v3w2/3/put",
+        "record_type": "operation_descriptor",
+        "method": "PUT",
+        "resource_policy_ref": "policy/v3w2/3/contract-bound",
+        "parameter_contract": {
+          "kind": "contract_bound",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/v3w2/3/support-2": {
+        "record_id": "operation/v3w2/3/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/3/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w2/3/support-3": {
+        "record_id": "operation/v3w2/3/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/3/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w2/3/support-4": {
+        "record_id": "operation/v3w2/3/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/3/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w2/3/support-5": {
+        "record_id": "operation/v3w2/3/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/3/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w2/3/support-6": {
+        "record_id": "operation/v3w2/3/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/3/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/v3w2/3/contract-bound": {
+        "record_id": "policy/v3w2/3/contract-bound",
+        "record_type": "resource_policy",
+        "rule": "contract_bound",
+        "decision_reason": "media_type_rejected"
+      },
+      "policy/v3w2/3/support-2": {
+        "record_id": "policy/v3w2/3/support-2",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w2/3/support-3": {
+        "record_id": "policy/v3w2/3/support-3",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w2/3/support-4": {
+        "record_id": "policy/v3w2/3/support-4",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w2/3/support-5": {
+        "record_id": "policy/v3w2/3/support-5",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w2/3/support-6": {
+        "record_id": "policy/v3w2/3/support-6",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "v3-protected-route-validation-03-object": {
+        "object_id": "v3-protected-route-validation-03-object",
+        "exists": true,
+        "owner_tenant": "A",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/web/v3/protected-route-validation/zone-3/target",
+      "object_id": "v3-protected-route-validation-03-object"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 415,
+      "outcome": "unknown",
+      "reason": "media_type_rejected",
+      "content_disclosed": false,
+      "deployment": "media-v9",
+      "policy_observed": true,
+      "backend_observed": false,
+      "response": {
+        "code": "media_type_rejected",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "v3-protected-route-validation-03-object",
+      "deployment": "media-v9",
+      "policy_ref": "policy/v3w2/3/contract-bound",
+      "outcome": "unknown",
+      "reason": "media_type_rejected",
+      "content_disclosed": false
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "v3 fresh instance: media upload route rejects an unsupported content contract",
+  "causal_signature": {
+    "method": "PUT",
+    "policy_kind": "contract_bound",
+    "outcome": "unknown",
+    "status": 415,
+    "reason": "media_type_rejected",
+    "content_disclosed": false,
+    "deployment_behavior": "media",
+    "policy_producer_reached": true,
+    "backend_producer_reached": false,
+    "object_exists": true,
+    "public_route_count": 3,
+    "protected_route_count": 3
+  }
+}

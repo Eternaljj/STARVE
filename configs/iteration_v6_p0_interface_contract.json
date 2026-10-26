@@ -1,0 +1,39 @@
+{
+  "interface_contract_version": "iteration-v6-p0-interface-contract-v0.1",
+  "current_plan_schema_version": "iteration-v6-plan-v1",
+  "submission_transport": "openai_compatible_function_tool",
+  "function_name": "submit_current_plan",
+  "function_tool_choice": "required_exact_function",
+  "streaming": false,
+  "schema_scope": "The function schema only requires a standard current_plan object with schema_version, goal_id, and ordered steps. Optional step fields retain normal plan semantics and none is required by the schema because of a V6 refinement.",
+  "current_plan_required_fields": ["schema_version", "goal_id", "steps"],
+  "step_required_fields": ["step_id", "operation"],
+  "step_optional_fields": ["binds_to", "fallback_for", "resource_units", "detail"],
+  "prohibited_schema_fields": ["refinement_id", "refinement_status", "gap", "feedback", "checkpoint_for", "recovery_required"],
+  "persistence": {
+    "store_raw_provider_response": true,
+    "store_raw_tool_arguments": true,
+    "store_parsed_current_plan_without_repair": true,
+    "preserve_step_order": true,
+    "preserve_operation_text": true,
+    "preserve_detail_text": true
+  },
+  "content_submission_failure": {
+    "definition": "A provider response was received but has no single valid submit_current_plan tool call, has invalid JSON arguments, or does not satisfy the structural current_plan schema.",
+    "retry_allowed": false,
+    "treatment": "Record the original response and classify the P0 as a content submission failure; do not repair, unwrap another shape, or request another content response."
+  },
+  "technical_failure": {
+    "definition": "No provider content was received because of a transport timeout, connection failure, HTTP 429, or HTTP 5xx response.",
+    "retry_allowed": true,
+    "technical_retry_limit": 1,
+    "treatment": "The identical normal prompt and identical function schema may be submitted once more only when no content was received. Both attempts are recorded."
+  },
+  "compatibility_test_scope": [
+    "normal current_plan can be persisted",
+    "ordered plan steps can be parsed",
+    "operation and detail semantics are preserved",
+    "schema contains no refinement requirement"
+  ],
+  "compatibility_test_excludes": ["token_measurement", "refinement_evaluation", "feedback", "plan_revision"]
+}

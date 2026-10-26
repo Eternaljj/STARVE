@@ -1,0 +1,1 @@
+"""Controlled resource traps."""

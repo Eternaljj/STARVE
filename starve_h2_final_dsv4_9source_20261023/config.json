@@ -1,0 +1,129 @@
+{
+  "config_version": "starve-h2-final-dsv4-9source-full-trajectory-v1",
+  "experiment_id": "STARVE-H2-FINAL-DSV4-9SOURCE",
+  "protocol_id": "STARVE-H2-FINAL-DSV4-9SOURCE-v1.0",
+  "batch_id": "starve-h2-final-dsv4-9source-b20-b30-20261023-v1",
+  "output_prefix": "STARVE-H2-FINAL-DSV4-9SOURCE_",
+  "source_config_path": "configs/h1_deepseek_v4_pro_9source_v1.json",
+  "source_manifest_path": "formal_H1_multitask_v3_2_freeze_manifest.json",
+  "source_selection_record": "formal_H1_multitask_v3_2_deepseek_v4_pro_9source_v1_selection.json",
+  "trusted_route_validation_path": "results/H2-V7-DeepSeek-V4-Pro_20261022T101128198251Z/final_validation.json",
+  "trusted_route_check_path": "results/H2-V7-DeepSeek-V4-Pro_20261022T101128198251Z/provider_route_check.json",
+  "provider": {
+    "name": "zhizengzeng",
+    "interface": "openai-compatible-chat-completions-v1",
+    "base_url": "https://api.zhizengzeng.com/v1",
+    "model_id": "deepseek-v4-pro",
+    "temperature": 0.0,
+    "max_tokens": 8192,
+    "timeout_seconds": 180,
+    "tool_choice": "auto",
+    "parallel_tool_calls": false,
+    "stream": false,
+    "credential_environment": "DS_V4_H1_API_KEY",
+    "accepted_response_model_ids": [
+      "deepseek-v4-pro"
+    ]
+  },
+  "source_count": 9,
+  "source_indices": [
+    1,
+    6,
+    2,
+    11,
+    16,
+    12,
+    21,
+    26,
+    22
+  ],
+  "family_counts": {
+    "WEB": 3,
+    "API": 3,
+    "SERVICE": 3
+  },
+  "source_selection_rule": {
+    "rule": "reuse the frozen DeepSeek-V4-Pro nine-source identity and order",
+    "uses_historical_outcomes": false,
+    "generates_new_sources": false
+  },
+  "states": [
+    "RECON",
+    "EXPLOITATION",
+    "VERIFICATION"
+  ],
+  "strategies": [
+    "NO_TRAP",
+    "FIXED_BRANCH_NEW_V3",
+    "FIXED_DEPENDENCY_V6",
+    "FIXED_EVIDENCE_NEW_V3",
+    "STATE_AWARE_FEASIBLE"
+  ],
+  "fixed_traps": {
+    "FIXED_BRANCH_NEW_V3": "BRANCH_NEW_V3",
+    "FIXED_DEPENDENCY_V6": "DEPENDENCY_V6",
+    "FIXED_EVIDENCE_NEW_V3": "EVIDENCE_NEW_V3"
+  },
+  "primary_fixed_comparator": "FIXED_DEPENDENCY_V6",
+  "priorities": {
+    "STATE_AWARE_FEASIBLE": {
+      "RECON": [
+        "DEPENDENCY_V6",
+        "BRANCH_NEW_V3",
+        "EVIDENCE_NEW_V3"
+      ],
+      "EXPLOITATION": [
+        "EVIDENCE_NEW_V3",
+        "DEPENDENCY_V6",
+        "BRANCH_NEW_V3"
+      ],
+      "VERIFICATION": [
+        "BRANCH_NEW_V3",
+        "DEPENDENCY_V6",
+        "EVIDENCE_NEW_V3"
+      ]
+    }
+  },
+  "trap_versions": {
+    "DEPENDENCY_V6": "dependency-v6-progressive-dose5-v1.0",
+    "EVIDENCE_NEW_V3": "EVIDENCE_NEW_V3_SCOPED_ASSOCIATION_V1",
+    "BRANCH_NEW_V3": "BRANCH_NEW_V3_STATE_GROUNDED"
+  },
+  "budgets": [
+    20,
+    30
+  ],
+  "budget_unit": "provider_calls per independent full trajectory",
+  "trajectory_count": 90,
+  "pair_count_per_source_budget": 10,
+  "primary_pair_count": 36,
+  "theoretical_maximum_provider_calls": 2250,
+  "exposure_contract": "pre-effect-v1",
+  "technical_retries": 0,
+  "automatic_recovery": false,
+  "automatic_source_replacement": false,
+  "per_trajectory_max_total_tokens": 800000,
+  "batch_maximum_requests": 2250,
+  "batch_maximum_total_tokens": 72000000,
+  "estimated_input_token_divisor": 3,
+  "maximum_process_address_space_bytes": 4294967296,
+  "memory_warning_rss_bytes": 2147483648,
+  "memory_hard_rss_bytes": 3221225472,
+  "maximum_provider_response_bytes": 8388608,
+  "cost_estimation": {
+    "basis": "DeepSeek-V4-Pro relay public list rates; actual billing not asserted",
+    "currency": "CNY",
+    "rates_cny_per_million_tokens": {
+      "input": 9.0,
+      "cached_input": 0.3,
+      "cache_write": 9.0,
+      "output": 27.0
+    }
+  },
+  "timing_unit": "milliseconds",
+  "timing_clock": "time.perf_counter_ns high-resolution monotonic clock",
+  "analysis_role": "STARVE H2 final five-strategy complete-trajectory evaluation",
+  "historical_results_reused": false,
+  "formal_H1_modified": false,
+  "other_models_modified": false
+}

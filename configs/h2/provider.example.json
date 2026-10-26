@@ -1,0 +1,7 @@
+{
+  "model": "deepseek-ai/DeepSeek-V3.2",
+  "base_url": "https://REPLACE_WITH_VERIFIED_ROUTE/v1",
+  "temperature": 0.0,
+  "timeout_seconds": 180,
+  "api_key_env": "H2_PROVIDER_API_KEY"
+}

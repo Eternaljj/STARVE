@@ -1,0 +1,59 @@
+{
+  "config_version": "h1-multisource-generalization-v1",
+  "protocol_id": "formal_H1_multitask_v3_2_deepseek_v4_pro_9source_v1",
+  "output_prefix": "formal_H1_multitask_v3_2_deepseek_v4_pro_9source_",
+  "selection_rule": {
+    "version": "template-round-robin-v1",
+    "fixed_before_outcomes": true,
+    "excluded_source_indices": [
+      10
+    ],
+    "family_count": 3,
+    "sources_per_family": 3,
+    "within_family": "order templates by first source_index; rotate across templates; take first three non-excluded sources",
+    "selected_source_indices": [
+      1,
+      6,
+      2,
+      11,
+      16,
+      12,
+      21,
+      26,
+      22
+    ]
+  },
+  "provider": {
+    "name": "zhizengzeng",
+    "base_url": "https://api.zhizengzeng.com/v1",
+    "model_id": "deepseek-v4-pro",
+    "temperature": 0.0,
+    "max_output_tokens": 2400,
+    "timeout_seconds": 180,
+    "tool_choice": "auto",
+    "parallel_tool_calls": false,
+    "stream": false
+  },
+  "limits": {
+    "per_source_maximum_requests": 140,
+    "per_source_maximum_total_tokens": 800000,
+    "batch_maximum_requests": 1100,
+    "batch_maximum_total_tokens": 5500000,
+    "cost_limit_enabled": false,
+    "exchange_rate_cny_per_usd": 7.2,
+    "rates_cny_per_million": {
+      "input_cny_per_million": 9.0,
+      "cached_input_cny_per_million": 0.3,
+      "cache_write_cny_per_million": 9.0,
+      "output_cny_per_million": 27.0
+    }
+  },
+  "scope": {
+    "source_count": 9,
+    "full_30_source_h1": false,
+    "other_models_allowed": false,
+    "automatic_retry": false,
+    "source_replacement": false,
+    "continue_other_sources_after_failure": true
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "config_version": "h1-gpt-trapmix-v6-branchnew-evidencenewv3-v1",
+  "protocol_id": "formal_H1_gpt_5_6_sol_trapmix_v6_clean_full_9source_v1",
+  "batch_id": "gpt56sol-trapmix-v6-clean-full-9source-v1",
+  "output_prefix": "formal_H1_gpt_5_6_sol_trapmix_v6_clean_full_9source_",
+  "reference_v4_run": "results/formal_H1_multitask_v3_2_deepseek_v4_pro_9source_20261020T085549326963Z",
+  "reference_v4_recovery": "results/h1_deepseek_v4_pro_source22_oom_recovery_20261020T113121636668Z",
+  "reference_gpt_h1": "results/formal_H1_multitask_v3_2_gpt_5_6_sol_9source_20261020T145454752194Z",
+  "compatibility_reference": "results/h1_evidence_v3_h1_compat_20261021_v2",
+  "source_count": 9,
+  "selected_source_indices": [1, 6, 2, 11, 16, 12, 21, 26, 22],
+  "provider": {
+    "name": "zhizengzeng",
+    "interface": "openai-compatible-chat-completions-v1",
+    "base_url": "https://api.zhizengzeng.com/v1",
+    "model_id": "gpt-5.6-sol",
+    "accepted_response_model_ids": ["gpt-5.6-sol"],
+    "reasoning_effort": "medium",
+    "output_token_parameter": "max_completion_tokens",
+    "max_completion_tokens": 2400,
+    "temperature": 0.0,
+    "temperature_effect": "UNVERIFIED",
+    "timeout_seconds": 180,
+    "tool_choice": "auto",
+    "parallel_tool_calls": false,
+    "stream": false,
+    "environment": {
+      "base_url": "H1_API_BASE_URL",
+      "api_key": "H1_P_GPT_API_KEY",
+      "model_id": "H1_MODEL_ID"
+    }
+  },
+  "conditions": {
+    "BASELINE": {
+      "display_name": "BASELINE",
+      "implementation": "frozen BASELINE lifecycle"
+    },
+    "BRANCH": {
+      "display_name": "BRANCH_NEW",
+      "implementation": "BRANCH_EXPANSION_V3_UNOBSERVED_SIDEPATH_V1"
+    },
+    "DEPENDENCY": {
+      "display_name": "DEPENDENCY_V6",
+      "implementation": "DEPENDENCY_V6_PROGRESSIVE_DISCLOSURE",
+      "profile": "dependency-v6-progressive-dose5-v1.0",
+      "material": "dependency-v6-scoped-records-v1.0"
+    },
+    "EVIDENCE": {
+      "display_name": "EVIDENCE_NEW_V3",
+      "implementation": "EVIDENCE_NEW_V3_SCOPED_ASSOCIATION_V1",
+      "compatibility_adapter": "h1-evidence-new-v3-state-complete-compat-v1"
+    }
+  },
+  "compatibility": {
+    "extended_detail_operation": "read-evidence-detail",
+    "shared_extended_interface_for_all_conditions": true,
+    "extension_source": "fixture-derived scoped policy rollout records",
+    "original_source_fixture_mutated": false,
+    "runtime_fixture_copy_only": true,
+    "trap_semantics_changed": false,
+    "oracle_changed": false
+  },
+  "limits": {
+    "per_source_maximum_requests": 140,
+    "per_source_maximum_total_tokens": 800000,
+    "batch_maximum_requests": 1260,
+    "batch_maximum_total_tokens": 7200000,
+    "estimated_input_token_divisor": 3,
+    "maximum_process_address_space_bytes": 2147483648,
+    "memory_warning_rss_bytes": 805306368,
+    "memory_hard_rss_bytes": 1610612736,
+    "maximum_provider_response_bytes": 8388608,
+    "single_process_only": true,
+    "automatic_retry": false,
+    "automatic_replacement": false,
+    "continue_after_source_technical_failure": true,
+    "stop_batch_on_unrecoverable_provider_or_usage_error": true
+  },
+  "analysis": {
+    "states": ["RECON", "EXPLOITATION", "VERIFICATION"],
+    "conditions": ["BASELINE", "BRANCH_NEW", "DEPENDENCY_V6", "EVIDENCE_NEW_V3"],
+    "expected_slots": 108,
+    "expected_pairs": 81,
+    "followup_budget": 12,
+    "pre_effect_version": "pre-effect-v1",
+    "random_seed": 20260928,
+    "bootstrap_draws": 2000,
+    "source_is_independent_unit": true,
+    "sample_size_interpretation": "nine-source descriptive and source-level uncertainty analysis only"
+  },
+  "cost_estimation": {
+    "basis": "OpenAI public list price in USD; Zhizengzeng actual billing is not asserted",
+    "currency": "USD",
+    "rates_usd_per_million_tokens": {
+      "input": 4.0,
+      "cached_input": 0.4,
+      "cache_write": 5.0,
+      "output": 20.0
+    }
+  }
+}

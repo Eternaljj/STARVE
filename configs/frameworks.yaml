@@ -1,0 +1,13 @@
+frameworks:
+  cyberstrikeai:
+    adapter: adapters.cyberstrikeai.CyberStrikeAIAdapter
+    transport: local_bridge
+    checkpoint_capability: NATIVE
+    safety_scope: local_mock_only
+    endpoint: http://127.0.0.1:18080
+    bridge_request_timeout_seconds: 300
+  pentestgpt:
+    adapter: adapters.pentestgpt.PentestGPTAdapter
+    transport: local_bridge
+    checkpoint_capability: REPLAY
+    safety_scope: local_mock_only

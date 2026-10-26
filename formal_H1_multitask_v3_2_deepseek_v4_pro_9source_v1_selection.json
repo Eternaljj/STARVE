@@ -1,0 +1,120 @@
+{
+  "version": "h1-deepseek-v4-pro-9source-selection-v1",
+  "protocol_id": "formal_H1_multitask_v3_2_deepseek_v4_pro_9source_v1",
+  "status": "FROZEN_BEFORE_OUTCOMES_NOT_STARTED",
+  "created_at": "2026-10-20T09:30:00+00:00",
+  "h1_started": false,
+  "provider_calls_during_selection": 0,
+  "model": "deepseek-v4-pro",
+  "selection_rule": {
+    "version": "template-round-robin-v1",
+    "excluded_source_indices": [
+      10
+    ],
+    "within_family": "order templates by first source_index; rotate across templates; take first three non-excluded sources"
+  },
+  "sources": [
+    {
+      "selection_rank": 1,
+      "source_index": 1,
+      "family": "WEB",
+      "template_id": "route-surface-inventory",
+      "instance_id": "mtpv2-w1-01",
+      "fixture_id": "mtpv2-w1-01-fixture-v2"
+    },
+    {
+      "selection_rank": 2,
+      "source_index": 6,
+      "family": "WEB",
+      "template_id": "protected-route-validation",
+      "instance_id": "mtpv2-w2-01",
+      "fixture_id": "mtpv2-w2-01-fixture-v2"
+    },
+    {
+      "selection_rank": 3,
+      "source_index": 2,
+      "family": "WEB",
+      "template_id": "route-surface-inventory",
+      "instance_id": "mtpv2-w1-02",
+      "fixture_id": "mtpv2-w1-02-fixture-v2"
+    },
+    {
+      "selection_rank": 4,
+      "source_index": 11,
+      "family": "API",
+      "template_id": "access-control-audit",
+      "instance_id": "mtpv2-a1-01",
+      "fixture_id": "mtpv2-a1-01-fixture-v2"
+    },
+    {
+      "selection_rank": 5,
+      "source_index": 16,
+      "family": "API",
+      "template_id": "request-contract-audit",
+      "instance_id": "mtpv2-a2-01",
+      "fixture_id": "mtpv2-a2-01-fixture-v2"
+    },
+    {
+      "selection_rank": 6,
+      "source_index": 12,
+      "family": "API",
+      "template_id": "access-control-audit",
+      "instance_id": "mtpv2-a1-02",
+      "fixture_id": "mtpv2-a1-02-fixture-v2"
+    },
+    {
+      "selection_rank": 7,
+      "source_index": 21,
+      "family": "SERVICE",
+      "template_id": "backend-binding-audit",
+      "instance_id": "mtpv2-s1-01",
+      "fixture_id": "mtpv2-s1-01-fixture-v2"
+    },
+    {
+      "selection_rank": 8,
+      "source_index": 26,
+      "family": "SERVICE",
+      "template_id": "dependency-config-diagnosis",
+      "instance_id": "mtpv2-s2-01",
+      "fixture_id": "mtpv2-s2-01-fixture-v2"
+    },
+    {
+      "selection_rank": 9,
+      "source_index": 22,
+      "family": "SERVICE",
+      "template_id": "backend-binding-audit",
+      "instance_id": "mtpv2-s1-02",
+      "fixture_id": "mtpv2-s1-02-fixture-v2"
+    }
+  ],
+  "frozen_design": {
+    "states": [
+      "RECON",
+      "EXPLOITATION",
+      "VERIFICATION"
+    ],
+    "conditions": [
+      "BASELINE",
+      "BRANCH",
+      "DEPENDENCY",
+      "EVIDENCE"
+    ],
+    "pre_effect_version": "pre-effect-v1",
+    "maximum_followups": 12,
+    "timeout_seconds": 180,
+    "technical_retries": 0,
+    "per_source_maximum_requests": 140,
+    "per_source_maximum_total_tokens": 800000,
+    "batch_maximum_requests": 1100,
+    "batch_maximum_total_tokens": 5500000,
+    "thinking_compatibility_version": "reasoning-content-passthrough-v2"
+  },
+  "result_policy": {
+    "one_independent_trajectory_per_source": true,
+    "reuse_historical_checkpoints": false,
+    "automatic_retry": false,
+    "source_replacement": false,
+    "continue_after_source_failure": true,
+    "overwrite_historical_results": false
+  }
+}

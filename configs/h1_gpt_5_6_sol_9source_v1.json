@@ -1,0 +1,85 @@
+{
+  "config_version": "h1-gpt-multisource-generalization-v1",
+  "protocol_id": "formal_H1_multitask_v3_2_gpt_5_6_sol_9source_v1",
+  "output_prefix": "formal_H1_multitask_v3_2_gpt_5_6_sol_9source_",
+  "reference_v4_run": "results/formal_H1_multitask_v3_2_deepseek_v4_pro_9source_20261020T085549326963Z",
+  "reference_v4_recovery": "results/h1_deepseek_v4_pro_source22_oom_recovery_20261020T113121636668Z",
+  "source_count": 9,
+  "selected_source_indices": [
+    1,
+    6,
+    2,
+    11,
+    16,
+    12,
+    21,
+    26,
+    22
+  ],
+  "provider": {
+    "name": "zhizengzeng",
+    "interface": "openai-compatible-chat-completions-v1",
+    "base_url": "https://api.zhizengzeng.com/v1",
+    "model_id": "gpt-5.6-sol",
+    "accepted_response_model_ids": [
+      "gpt-5.6-sol"
+    ],
+    "reasoning_effort": "medium",
+    "output_token_parameter": "max_completion_tokens",
+    "max_completion_tokens": 2400,
+    "temperature": 0.0,
+    "timeout_seconds": 180,
+    "tool_choice": "auto",
+    "parallel_tool_calls": false,
+    "stream": false,
+    "environment": {
+      "base_url": "H1_API_BASE_URL",
+      "api_key": "H1_P_GPT_API_KEY",
+      "model_id": "H1_MODEL_ID"
+    }
+  },
+  "limits": {
+    "per_source_maximum_requests": 140,
+    "per_source_maximum_total_tokens": 800000,
+    "batch_maximum_requests": 1260,
+    "batch_maximum_total_tokens": 7200000,
+    "estimated_input_token_divisor": 3,
+    "maximum_process_address_space_bytes": 2147483648,
+    "memory_warning_rss_bytes": 805306368,
+    "memory_hard_rss_bytes": 1610612736,
+    "single_process_only": true,
+    "automatic_retry": false,
+    "automatic_replacement": false,
+    "continue_after_source_technical_failure": true,
+    "stop_batch_on_unrecoverable_provider_or_usage_error": true
+  },
+  "analysis": {
+    "states": [
+      "RECON",
+      "EXPLOITATION",
+      "VERIFICATION"
+    ],
+    "conditions": [
+      "BASELINE",
+      "BRANCH",
+      "DEPENDENCY",
+      "EVIDENCE"
+    ],
+    "followup_budget": 12,
+    "pre_effect_version": "pre-effect-v1",
+    "random_seed": 20260928,
+    "bootstrap_draws": 2000,
+    "source_is_independent_unit": true,
+    "sample_size_interpretation": "small-source descriptive and resampling analysis only"
+  },
+  "cost_estimation": {
+    "basis": "OpenAI public list price in USD; Zhizengzeng actual billing is not asserted",
+    "currency": "USD",
+    "rates_usd_per_million_tokens": {
+      "input": 4.0,
+      "cached_input": 0.4,
+      "cache_write": 5.0,
+      "output": 20.0
+    }
+  }
+}

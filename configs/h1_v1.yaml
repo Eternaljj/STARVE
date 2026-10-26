@@ -1,0 +1,21 @@
+taxonomy:
+  version: h1-v1
+  states: [RECON, PLANNING, EXPLOITATION, VERIFICATION]
+  legacy_states: [EXECUTION, REPAIR]
+traps:
+  budget: 4
+  profile_version: h1-v1.3.1-evidence
+  semantics:
+    budget_means: maximum_optional_follow_up_opportunities
+    continuation_is_agent_selected: true
+    reveal_trap_identity_to_agent: false
+    payload_policy: bounded_structured_local_result
+  definitions:
+    BASELINE: {primitive: BASELINE, implementation: BASELINE, opportunities: 0}
+    ITERATION_AMPLIFICATION: {primitive: ITERATION_AMPLIFICATION, implementation: SVP, opportunities: 4}
+    BRANCH_EXPANSION: {primitive: BRANCH_EXPANSION, implementation: HONEY_ASSET, opportunities: 4}
+    DEPENDENCY_EXPANSION: {primitive: DEPENDENCY_EXPANSION, implementation: TOOL_CHAIN, opportunities: 4}
+    EVIDENCE_EXPANSION: {primitive: EVIDENCE_EXPANSION, implementation: CROSS_VALIDATION, opportunities: 4}
+experiment:
+  repetitions: 5
+  local_only: true

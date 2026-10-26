@@ -1,0 +1,384 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "h2p1-w1-04-task",
+  "family": "WEB",
+  "template_id": "route-surface-inventory",
+  "instance_id": "h2p1-w1-04",
+  "fixture_id": "h2p1-w1-04-fixture-v1",
+  "snapshot_id": "h2p1-w1-04-initial-snapshot-v1",
+  "task_objective": "Discover the exposed Web surface, classify public and protected routes, execute one authorized check against a real fixture target, and report the observed behavior.",
+  "task_prompt": "Perform the authorized local web security task in the designated fixture. Discover the exposed Web surface, classify public and protected routes, execute one authorized check against a real fixture target, and report the observed behavior. The controlled target and synthetic object are fixture records; use only observations and records produced by your own controlled action.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-web-104",
+      "tenant": "B",
+      "roles": [
+        "auditor"
+      ],
+      "scopes": [
+        "read",
+        "write"
+      ]
+    },
+    "bindings": {
+      "/web/route-surface-inventory/target-104": {
+        "record_id": "binding/w1/104/1",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/target-104",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/w1/104/get",
+        "deployment": "h2-w1-deployment-04"
+      },
+      "/web/route-surface-inventory/104/public-1": {
+        "record_id": "binding/w1/104/2",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/public-1",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/w1/104/support-2",
+        "deployment": "support-w1-2"
+      },
+      "/web/route-surface-inventory/104/public-2": {
+        "record_id": "binding/w1/104/3",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/public-2",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/w1/104/support-3",
+        "deployment": "support-w1-3"
+      },
+      "/web/route-surface-inventory/104/public-3": {
+        "record_id": "binding/w1/104/4",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/public-3",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/w1/104/support-4",
+        "deployment": "support-w1-4"
+      },
+      "/web/route-surface-inventory/104/public-4": {
+        "record_id": "binding/w1/104/5",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/public-4",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/w1/104/support-5",
+        "deployment": "support-w1-5"
+      },
+      "/web/route-surface-inventory/104/public-5": {
+        "record_id": "binding/w1/104/6",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/public-5",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/w1/104/support-6",
+        "deployment": "support-w1-6"
+      },
+      "/web/route-surface-inventory/104/public-6": {
+        "record_id": "binding/w1/104/7",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/public-6",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/w1/104/support-7",
+        "deployment": "support-w1-7"
+      },
+      "/web/route-surface-inventory/104/protected-1": {
+        "record_id": "binding/w1/104/8",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/protected-1",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/w1/104/support-8",
+        "deployment": "support-w1-8"
+      },
+      "/web/route-surface-inventory/104/protected-2": {
+        "record_id": "binding/w1/104/9",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/protected-2",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/w1/104/support-9",
+        "deployment": "support-w1-9"
+      },
+      "/web/route-surface-inventory/104/protected-3": {
+        "record_id": "binding/w1/104/10",
+        "record_type": "route_binding",
+        "route": "/web/route-surface-inventory/104/protected-3",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/w1/104/support-10",
+        "deployment": "support-w1-10"
+      }
+    },
+    "descriptors": {
+      "operation/w1/104/get": {
+        "record_id": "operation/w1/104/get",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/owner-only",
+        "parameter_contract": {
+          "kind": "owner_only",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/w1/104/support-2": {
+        "record_id": "operation/w1/104/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/w1/104/support-3": {
+        "record_id": "operation/w1/104/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/w1/104/support-4": {
+        "record_id": "operation/w1/104/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/w1/104/support-5": {
+        "record_id": "operation/w1/104/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/w1/104/support-6": {
+        "record_id": "operation/w1/104/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/w1/104/support-7": {
+        "record_id": "operation/w1/104/support-7",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-7",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/w1/104/support-8": {
+        "record_id": "operation/w1/104/support-8",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-8",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/w1/104/support-9": {
+        "record_id": "operation/w1/104/support-9",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-9",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/w1/104/support-10": {
+        "record_id": "operation/w1/104/support-10",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/w1/104/support-10",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/w1/104/owner-only": {
+        "record_id": "policy/w1/104/owner-only",
+        "record_type": "resource_policy",
+        "rule": "owner_only",
+        "decision_reason": "owner_match"
+      },
+      "policy/w1/104/support-2": {
+        "record_id": "policy/w1/104/support-2",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/w1/104/support-3": {
+        "record_id": "policy/w1/104/support-3",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/w1/104/support-4": {
+        "record_id": "policy/w1/104/support-4",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/w1/104/support-5": {
+        "record_id": "policy/w1/104/support-5",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/w1/104/support-6": {
+        "record_id": "policy/w1/104/support-6",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/w1/104/support-7": {
+        "record_id": "policy/w1/104/support-7",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/w1/104/support-8": {
+        "record_id": "policy/w1/104/support-8",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/w1/104/support-9": {
+        "record_id": "policy/w1/104/support-9",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/w1/104/support-10": {
+        "record_id": "policy/w1/104/support-10",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "synthetic-route-surface-inventory-104": {
+        "object_id": "synthetic-route-surface-inventory-104",
+        "exists": true,
+        "owner_tenant": "B",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/web/route-surface-inventory/target-104",
+      "object_id": "synthetic-route-surface-inventory-104"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 200,
+      "outcome": "allowed",
+      "reason": "owner_match",
+      "content_disclosed": true,
+      "deployment": "h2-w1-deployment-04",
+      "policy_observed": true,
+      "backend_observed": true,
+      "response": {
+        "code": "owner_match",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "synthetic-route-surface-inventory-104",
+      "deployment": "h2-w1-deployment-04",
+      "policy_ref": "policy/w1/104/owner-only",
+      "outcome": "allowed",
+      "reason": "owner_match",
+      "content_disclosed": true
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "H2 independent evaluation instance: same-tenant profile read is allowed and returns synthetic content; deployed public/protected counts=6/4",
+  "causal_signature": {
+    "method": "GET",
+    "policy_kind": "owner_only",
+    "outcome": "allowed",
+    "status": 200,
+    "reason": "owner_match",
+    "content_disclosed": true,
+    "deployment_behavior": "h2-w1-deployment",
+    "policy_producer_reached": true,
+    "backend_producer_reached": true,
+    "object_exists": true,
+    "public_route_count": 6,
+    "protected_route_count": 4
+  }
+}

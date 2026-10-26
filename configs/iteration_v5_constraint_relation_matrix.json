@@ -1,0 +1,31 @@
+{
+  "relation_matrix_version": "iteration-v5-relation-matrix-v0.1",
+  "allowed_relations": ["independent", "dependent", "overlapping"],
+  "scope": "Only constraints co-applicable to the same task family are paired; cross-family pairs are not applicable.",
+  "families": {
+    "coverage_order": [
+      {"constraint_pair": ["CO-C1", "CO-C2"], "relation": "independent", "rationale": "完整步骤不保证顺序，顺序检查也不保证步骤完整。"},
+      {"constraint_pair": ["CO-C1", "CO-C3"], "relation": "independent", "rationale": "步骤存在不保证绑定字段合法，绑定字段也不保证步骤齐全。"},
+      {"constraint_pair": ["CO-C1", "CO-C4"], "relation": "independent", "rationale": "步骤覆盖与资源总量使用不同计划元素属性。"},
+      {"constraint_pair": ["CO-C2", "CO-C3"], "relation": "independent", "rationale": "顺序位置与 binds_to 字段是不同的计划属性。"},
+      {"constraint_pair": ["CO-C2", "CO-C4"], "relation": "independent", "rationale": "顺序位置不推出资源总量。"},
+      {"constraint_pair": ["CO-C3", "CO-C4"], "relation": "independent", "rationale": "绑定字段不推出资源总量。"}
+    ],
+    "session_window": [
+      {"constraint_pair": ["SW-C1", "SW-C2"], "relation": "independent", "rationale": "步骤完整不保证会话边界顺序，边界顺序也不保证步骤完整。"},
+      {"constraint_pair": ["SW-C1", "SW-C3"], "relation": "independent", "rationale": "步骤存在不保证 fallback_for 字段，fallback 字段也不保证步骤齐全。"},
+      {"constraint_pair": ["SW-C1", "SW-C4"], "relation": "independent", "rationale": "步骤覆盖与资源总量使用不同计划元素属性。"},
+      {"constraint_pair": ["SW-C2", "SW-C3"], "relation": "independent", "rationale": "会话边界位置与 fallback 标注是不同的计划属性。"},
+      {"constraint_pair": ["SW-C2", "SW-C4"], "relation": "independent", "rationale": "会话边界顺序不推出资源总量。"},
+      {"constraint_pair": ["SW-C3", "SW-C4"], "relation": "independent", "rationale": "fallback 标注不推出资源总量。"}
+    ],
+    "freshness_reconciliation": [
+      {"constraint_pair": ["FR-C1", "FR-C2"], "relation": "independent", "rationale": "步骤完整不保证协调顺序，协调顺序也不保证步骤完整。"},
+      {"constraint_pair": ["FR-C1", "FR-C3"], "relation": "independent", "rationale": "步骤存在不保证 binds_to 字段合法，绑定字段也不保证步骤齐全。"},
+      {"constraint_pair": ["FR-C1", "FR-C4"], "relation": "independent", "rationale": "步骤覆盖与资源总量使用不同计划元素属性。"},
+      {"constraint_pair": ["FR-C2", "FR-C3"], "relation": "independent", "rationale": "顺序位置与绑定字段是不同的计划属性。"},
+      {"constraint_pair": ["FR-C2", "FR-C4"], "relation": "independent", "rationale": "协调顺序不推出资源总量。"},
+      {"constraint_pair": ["FR-C3", "FR-C4"], "relation": "independent", "rationale": "绑定字段不推出资源总量。"}
+    ]
+  }
+}

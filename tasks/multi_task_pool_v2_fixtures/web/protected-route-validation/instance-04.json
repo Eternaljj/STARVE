@@ -1,0 +1,283 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "mtpv2-web-protected-route-validation-04",
+  "family": "WEB",
+  "template_id": "protected-route-validation",
+  "instance_id": "mtpv2-w2-04",
+  "fixture_id": "mtpv2-w2-04-fixture-v2",
+  "snapshot_id": "mtpv2-w2-04-initial-snapshot-v2",
+  "task_objective": "Locate a non-public Web route, resolve its deployed binding, execute the authorized validation request, and judge whether access follows the configured boundary.",
+  "task_prompt": "Perform the authorized local web security task in the designated fixture. Locate a non-public Web route, resolve its deployed binding, execute the authorized validation request, and judge whether access follows the configured boundary. The controlled target and synthetic object are fixture records; use only observations and records produced by your own controlled action.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-web-4",
+      "tenant": "B",
+      "roles": [
+        "reader"
+      ],
+      "scopes": [
+        "read"
+      ]
+    },
+    "bindings": {
+      "/web/v3/protected-route-validation/zone-4/target": {
+        "record_id": "binding/v3w2/4/1",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-4/target",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w2/4/get",
+        "deployment": "preview-offline-v2"
+      },
+      "/web/v3/protected-route-validation/zone-4/public-1": {
+        "record_id": "binding/v3w2/4/2",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-4/public-1",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w2/4/support-2",
+        "deployment": "support-w2-2"
+      },
+      "/web/v3/protected-route-validation/zone-4/public-2": {
+        "record_id": "binding/v3w2/4/3",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-4/public-2",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w2/4/support-3",
+        "deployment": "support-w2-3"
+      },
+      "/web/v3/protected-route-validation/zone-4/public-3": {
+        "record_id": "binding/v3w2/4/4",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-4/public-3",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w2/4/support-4",
+        "deployment": "support-w2-4"
+      },
+      "/web/v3/protected-route-validation/zone-4/public-4": {
+        "record_id": "binding/v3w2/4/5",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-4/public-4",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w2/4/support-5",
+        "deployment": "support-w2-5"
+      },
+      "/web/v3/protected-route-validation/zone-4/public-5": {
+        "record_id": "binding/v3w2/4/6",
+        "record_type": "route_binding",
+        "route": "/web/v3/protected-route-validation/zone-4/public-5",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w2/4/support-6",
+        "deployment": "support-w2-6"
+      }
+    },
+    "descriptors": {
+      "operation/v3w2/4/get": {
+        "record_id": "operation/v3w2/4/get",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/4/deployment-required",
+        "parameter_contract": {
+          "kind": "deployment_required",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/v3w2/4/support-2": {
+        "record_id": "operation/v3w2/4/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/4/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w2/4/support-3": {
+        "record_id": "operation/v3w2/4/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/4/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w2/4/support-4": {
+        "record_id": "operation/v3w2/4/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/4/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w2/4/support-5": {
+        "record_id": "operation/v3w2/4/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/4/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w2/4/support-6": {
+        "record_id": "operation/v3w2/4/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w2/4/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/v3w2/4/deployment-required": {
+        "record_id": "policy/v3w2/4/deployment-required",
+        "record_type": "resource_policy",
+        "rule": "deployment_required",
+        "decision_reason": "deployment_disabled"
+      },
+      "policy/v3w2/4/support-2": {
+        "record_id": "policy/v3w2/4/support-2",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w2/4/support-3": {
+        "record_id": "policy/v3w2/4/support-3",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w2/4/support-4": {
+        "record_id": "policy/v3w2/4/support-4",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w2/4/support-5": {
+        "record_id": "policy/v3w2/4/support-5",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w2/4/support-6": {
+        "record_id": "policy/v3w2/4/support-6",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "v3-protected-route-validation-04-object": {
+        "object_id": "v3-protected-route-validation-04-object",
+        "exists": true,
+        "owner_tenant": "B",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/web/v3/protected-route-validation/zone-4/target",
+      "object_id": "v3-protected-route-validation-04-object"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 503,
+      "outcome": "unknown",
+      "reason": "deployment_disabled",
+      "content_disclosed": false,
+      "deployment": "preview-offline-v2",
+      "policy_observed": false,
+      "backend_observed": false,
+      "response": {
+        "code": "deployment_disabled",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "v3-protected-route-validation-04-object",
+      "deployment": "preview-offline-v2",
+      "policy_ref": "policy/v3w2/4/deployment-required",
+      "outcome": "unknown",
+      "reason": "deployment_disabled",
+      "content_disclosed": false
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "v3 fresh instance: disabled preview deployment has no live backend",
+  "causal_signature": {
+    "method": "GET",
+    "policy_kind": "deployment_required",
+    "outcome": "unknown",
+    "status": 503,
+    "reason": "deployment_disabled",
+    "content_disclosed": false,
+    "deployment_behavior": "preview-offline",
+    "policy_producer_reached": false,
+    "backend_producer_reached": false,
+    "object_exists": true,
+    "public_route_count": 5,
+    "protected_route_count": 1
+  }
+}

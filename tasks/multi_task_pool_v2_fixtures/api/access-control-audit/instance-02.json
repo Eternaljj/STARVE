@@ -1,0 +1,283 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "mtpv2-api-access-control-audit-02",
+  "family": "API",
+  "template_id": "access-control-audit",
+  "instance_id": "mtpv2-a1-02",
+  "fixture_id": "mtpv2-a1-02-fixture-v2",
+  "snapshot_id": "mtpv2-a1-02-initial-snapshot-v2",
+  "task_objective": "Inspect an API endpoint's method, authentication, and policy boundary; execute one authorized boundary request; and report the authorization behavior from produced records.",
+  "task_prompt": "Perform the authorized local api security task in the designated fixture. Inspect an API endpoint's method, authentication, and policy boundary; execute one authorized boundary request; and report the authorization behavior from produced records. The controlled target and synthetic object are fixture records; use only observations and records produced by your own controlled action.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-api-2",
+      "tenant": "B",
+      "roles": [
+        "reader"
+      ],
+      "scopes": [
+        "read"
+      ]
+    },
+    "bindings": {
+      "/api/v3/access-control-audit/zone-2/target": {
+        "record_id": "binding/v3a1/2/1",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-2/target",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3a1/2/delete",
+        "deployment": "archive-api-v8"
+      },
+      "/api/v3/access-control-audit/zone-2/public-1": {
+        "record_id": "binding/v3a1/2/2",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-2/public-1",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3a1/2/support-2",
+        "deployment": "support-a1-2"
+      },
+      "/api/v3/access-control-audit/zone-2/public-2": {
+        "record_id": "binding/v3a1/2/3",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-2/public-2",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3a1/2/support-3",
+        "deployment": "support-a1-3"
+      },
+      "/api/v3/access-control-audit/zone-2/public-3": {
+        "record_id": "binding/v3a1/2/4",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-2/public-3",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3a1/2/support-4",
+        "deployment": "support-a1-4"
+      },
+      "/api/v3/access-control-audit/zone-2/public-4": {
+        "record_id": "binding/v3a1/2/5",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-2/public-4",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3a1/2/support-5",
+        "deployment": "support-a1-5"
+      },
+      "/api/v3/access-control-audit/zone-2/protected-1": {
+        "record_id": "binding/v3a1/2/6",
+        "record_type": "route_binding",
+        "route": "/api/v3/access-control-audit/zone-2/protected-1",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3a1/2/support-6",
+        "deployment": "support-a1-6"
+      }
+    },
+    "descriptors": {
+      "operation/v3a1/2/delete": {
+        "record_id": "operation/v3a1/2/delete",
+        "record_type": "operation_descriptor",
+        "method": "DELETE",
+        "resource_policy_ref": "policy/v3a1/2/admin-only",
+        "parameter_contract": {
+          "kind": "admin_only",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/v3a1/2/support-2": {
+        "record_id": "operation/v3a1/2/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/2/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3a1/2/support-3": {
+        "record_id": "operation/v3a1/2/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/2/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3a1/2/support-4": {
+        "record_id": "operation/v3a1/2/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/2/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3a1/2/support-5": {
+        "record_id": "operation/v3a1/2/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/2/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3a1/2/support-6": {
+        "record_id": "operation/v3a1/2/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3a1/2/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/v3a1/2/admin-only": {
+        "record_id": "policy/v3a1/2/admin-only",
+        "record_type": "resource_policy",
+        "rule": "admin_only",
+        "decision_reason": "admin_role_missing"
+      },
+      "policy/v3a1/2/support-2": {
+        "record_id": "policy/v3a1/2/support-2",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3a1/2/support-3": {
+        "record_id": "policy/v3a1/2/support-3",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3a1/2/support-4": {
+        "record_id": "policy/v3a1/2/support-4",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3a1/2/support-5": {
+        "record_id": "policy/v3a1/2/support-5",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3a1/2/support-6": {
+        "record_id": "policy/v3a1/2/support-6",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "v3-access-control-audit-02-object": {
+        "object_id": "v3-access-control-audit-02-object",
+        "exists": true,
+        "owner_tenant": "B",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/api/v3/access-control-audit/zone-2/target",
+      "object_id": "v3-access-control-audit-02-object"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 403,
+      "outcome": "denied",
+      "reason": "admin_role_missing",
+      "content_disclosed": false,
+      "deployment": "archive-api-v8",
+      "policy_observed": true,
+      "backend_observed": false,
+      "response": {
+        "code": "admin_role_missing",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "v3-access-control-audit-02-object",
+      "deployment": "archive-api-v8",
+      "policy_ref": "policy/v3a1/2/admin-only",
+      "outcome": "denied",
+      "reason": "admin_role_missing",
+      "content_disclosed": false
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "v3 fresh instance: privileged archive deletion is denied to a reader",
+  "causal_signature": {
+    "method": "DELETE",
+    "policy_kind": "admin_only",
+    "outcome": "denied",
+    "status": 403,
+    "reason": "admin_role_missing",
+    "content_disclosed": false,
+    "deployment_behavior": "archive-api",
+    "policy_producer_reached": true,
+    "backend_producer_reached": false,
+    "object_exists": true,
+    "public_route_count": 4,
+    "protected_route_count": 2
+  }
+}

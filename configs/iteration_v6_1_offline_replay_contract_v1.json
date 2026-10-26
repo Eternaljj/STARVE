@@ -1,0 +1,150 @@
+{
+  "contract_version": "iteration-v6-1-offline-replay-contract-v1",
+  "status": "frozen_before_offline_replay",
+  "scope": "A minimal saved-plan replay that verifies fixed candidate recognition against five recorded failure transitions and three recorded normal transitions. It is not a new V6 experiment.",
+  "boundaries": {
+    "model_call_count": 0,
+    "v6_model_branch_rerun": false,
+    "v6_budget_modified": false,
+    "v6_artifact_modified": false,
+    "new_checkpoint_created": false,
+    "formal_h1": false,
+    "capacity_sensitivity_experiment": false
+  },
+  "inputs": {
+    "frozen_micro_pilot_output": "results/iteration_v6_micro_pilot_20260918_v1",
+    "branch_records": "results/iteration_v6_micro_pilot_20260918_v1/branch_records.json",
+    "heldout_task_manifest": "tasks/iteration_v6_micro_pilot_heldout_tasks_v1.json",
+    "v6_evaluator_module": "traps/iteration_v6.py",
+    "v6_micro_pilot_mechanics": "traps/iteration_v6_micro_pilot.py"
+  },
+  "fixed_rule": {
+    "status_rank": {
+      "unsatisfied": 0,
+      "partially_satisfied": 1,
+      "satisfied": 2
+    },
+    "candidate_handling": "Every saved candidate remains in its frozen source record. This replay creates no replacement plan and never writes to the source result.",
+    "rule_order": [
+      {
+        "when": "candidate is not parse-valid or not hard-task-valid",
+        "disposition": "REJECT_HARD_INVALID",
+        "retained_plan": "predecessor",
+        "residual_gap_status": "not_evaluable"
+      },
+      {
+        "when": "candidate is hard-task-valid and any frozen refinement status rank is lower than its predecessor",
+        "disposition": "REJECT_REFINEMENT_REGRESSION",
+        "retained_plan": "predecessor"
+      },
+      {
+        "when": "candidate is hard-task-valid and has no frozen refinement-status regression",
+        "disposition": "ACCEPT_NONREGRESSING_HARD_VALID",
+        "retained_plan": "candidate"
+      }
+    ],
+    "measurement_boundary": "Acceptance does not require a substantive refinement event. Rejected candidates do not count toward revision depth."
+  },
+  "selected_transitions": [
+    {
+      "case_id": "aoa_coverage_01_over_budget",
+      "case_type": "known_over_budget",
+      "task_id": "v6-micro-coverage-01",
+      "condition": "ALL_AT_ONCE_REFINEMENT",
+      "predecessor_plan_version": "P0",
+      "candidate_plan_version": "P1",
+      "expected_disposition": "REJECT_HARD_INVALID",
+      "expected_hard_violation_codes": ["resource_budget_exceeded"],
+      "expected_resource_total": 19,
+      "expected_resource_budget": 16
+    },
+    {
+      "case_id": "aoa_coverage_02_over_budget",
+      "case_type": "known_over_budget",
+      "task_id": "v6-micro-coverage-02",
+      "condition": "ALL_AT_ONCE_REFINEMENT",
+      "predecessor_plan_version": "P0",
+      "candidate_plan_version": "P1",
+      "expected_disposition": "REJECT_HARD_INVALID",
+      "expected_hard_violation_codes": ["resource_budget_exceeded"],
+      "expected_resource_total": 19,
+      "expected_resource_budget": 16
+    },
+    {
+      "case_id": "aoa_session_02_over_budget",
+      "case_type": "known_over_budget",
+      "task_id": "v6-micro-session-02",
+      "condition": "ALL_AT_ONCE_REFINEMENT",
+      "predecessor_plan_version": "P1",
+      "candidate_plan_version": "P2",
+      "expected_disposition": "REJECT_HARD_INVALID",
+      "expected_hard_violation_codes": ["resource_budget_exceeded"],
+      "expected_resource_total": 23,
+      "expected_resource_budget": 20
+    },
+    {
+      "case_id": "incremental_freshness_01_regression",
+      "case_type": "known_incremental_regression",
+      "task_id": "v6-micro-freshness-01",
+      "condition": "INCREMENTAL_REFINEMENT",
+      "predecessor_plan_version": "P1",
+      "candidate_plan_version": "P2",
+      "expected_disposition": "REJECT_REFINEMENT_REGRESSION",
+      "expected_regressed_refinement_ids": ["FR-R1"]
+    },
+    {
+      "case_id": "incremental_freshness_02_regression",
+      "case_type": "known_incremental_regression",
+      "task_id": "v6-micro-freshness-02",
+      "condition": "INCREMENTAL_REFINEMENT",
+      "predecessor_plan_version": "P1",
+      "candidate_plan_version": "P2",
+      "expected_disposition": "REJECT_REFINEMENT_REGRESSION",
+      "expected_regressed_refinement_ids": ["FR-R1"]
+    },
+    {
+      "case_id": "normal_coverage_01_incremental_p1",
+      "case_type": "normal_control",
+      "task_id": "v6-micro-coverage-01",
+      "condition": "INCREMENTAL_REFINEMENT",
+      "predecessor_plan_version": "P0",
+      "candidate_plan_version": "P1",
+      "expected_disposition": "ACCEPT_NONREGRESSING_HARD_VALID",
+      "expected_improved_refinement_ids": ["CO-R1"]
+    },
+    {
+      "case_id": "normal_session_01_all_at_once_p1",
+      "case_type": "normal_control",
+      "task_id": "v6-micro-session-01",
+      "condition": "ALL_AT_ONCE_REFINEMENT",
+      "predecessor_plan_version": "P0",
+      "candidate_plan_version": "P1",
+      "expected_disposition": "ACCEPT_NONREGRESSING_HARD_VALID",
+      "expected_improved_refinement_ids": ["SW-R1", "SW-R2", "SW-R3", "SW-R4"]
+    },
+    {
+      "case_id": "normal_freshness_01_incremental_p1",
+      "case_type": "normal_control",
+      "task_id": "v6-micro-freshness-01",
+      "condition": "INCREMENTAL_REFINEMENT",
+      "predecessor_plan_version": "P0",
+      "candidate_plan_version": "P1",
+      "expected_disposition": "ACCEPT_NONREGRESSING_HARD_VALID",
+      "expected_improved_refinement_ids": ["FR-R1"]
+    }
+  ],
+  "pass_criteria": {
+    "selected_case_count": 8,
+    "known_over_budget_cases_rejected": 3,
+    "known_incremental_regressions_rejected": 2,
+    "normal_controls_accepted": 3,
+    "source_v6_artifacts_unchanged": true,
+    "stop_after_pass": true,
+    "passing_does_not_authorize": ["new_model_call", "new_v6_p0", "new_live_pilot", "formal_h1", "capacity_sensitivity_experiment"]
+  },
+  "outputs": {
+    "output_root": "results/iteration_v6_1_offline_replay_20260918_v1",
+    "overwrite_policy": "refuse_existing_output"
+  },
+  "change_record": "Created after the frozen V6 micro-pilot as a deliberately minimal, saved-plan-only verification step. It neither changes V6 budgets nor reruns V6 model branches."
+}

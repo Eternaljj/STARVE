@@ -1,0 +1,21 @@
+{
+  "config_version": "p0a-stagetrap-output-budget-v1-8192",
+  "scope": "independent P0A StageTrap continuation budget profile",
+  "applies_to": [
+    "BASELINE",
+    "BRANCH_NEW",
+    "DEPENDENCY_V5",
+    "EVIDENCE_NEW"
+  ],
+  "model": "deepseek-v4-pro",
+  "temperature": 0.0,
+  "max_tokens": 8192,
+  "maximum_followups": 12,
+  "maximum_provider_requests_per_condition": 12,
+  "technical_retries": 0,
+  "client_serial_protocol": "p0a-client-serial-tool-compat-v1",
+  "historical_profile": "p0a-stagetrap-output-budget-v1-2400",
+  "data_separation": "results from this profile must use a new versioned directory and must not merge with 2400-profile results",
+  "formal_h1_or_h2": false,
+  "provider_calls": 0
+}

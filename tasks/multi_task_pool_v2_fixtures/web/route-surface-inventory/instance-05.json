@@ -1,0 +1,283 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "mtpv2-web-route-surface-inventory-05",
+  "family": "WEB",
+  "template_id": "route-surface-inventory",
+  "instance_id": "mtpv2-w1-05",
+  "fixture_id": "mtpv2-w1-05-fixture-v2",
+  "snapshot_id": "mtpv2-w1-05-initial-snapshot-v2",
+  "task_objective": "Discover the exposed Web surface, classify public and protected routes, execute one authorized check against a real fixture target, and report the observed behavior.",
+  "task_prompt": "Perform the authorized local web security task in the designated fixture. Discover the exposed Web surface, classify public and protected routes, execute one authorized check against a real fixture target, and report the observed behavior. The controlled target and synthetic object are fixture records; use only observations and records produced by your own controlled action.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-web-5",
+      "tenant": "A",
+      "roles": [
+        "reader"
+      ],
+      "scopes": [
+        "read"
+      ]
+    },
+    "bindings": {
+      "/web/v3/route-surface-inventory/zone-5/target": {
+        "record_id": "binding/v3w1/5/1",
+        "record_type": "route_binding",
+        "route": "/web/v3/route-surface-inventory/zone-5/target",
+        "asset_kind": "route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/v3w1/5/post",
+        "deployment": "search-v13"
+      },
+      "/web/v3/route-surface-inventory/zone-5/protected-1": {
+        "record_id": "binding/v3w1/5/2",
+        "record_type": "route_binding",
+        "route": "/web/v3/route-surface-inventory/zone-5/protected-1",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w1/5/support-2",
+        "deployment": "support-w1-2"
+      },
+      "/web/v3/route-surface-inventory/zone-5/protected-2": {
+        "record_id": "binding/v3w1/5/3",
+        "record_type": "route_binding",
+        "route": "/web/v3/route-surface-inventory/zone-5/protected-2",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w1/5/support-3",
+        "deployment": "support-w1-3"
+      },
+      "/web/v3/route-surface-inventory/zone-5/protected-3": {
+        "record_id": "binding/v3w1/5/4",
+        "record_type": "route_binding",
+        "route": "/web/v3/route-surface-inventory/zone-5/protected-3",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w1/5/support-4",
+        "deployment": "support-w1-4"
+      },
+      "/web/v3/route-surface-inventory/zone-5/protected-4": {
+        "record_id": "binding/v3w1/5/5",
+        "record_type": "route_binding",
+        "route": "/web/v3/route-surface-inventory/zone-5/protected-4",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w1/5/support-5",
+        "deployment": "support-w1-5"
+      },
+      "/web/v3/route-surface-inventory/zone-5/protected-5": {
+        "record_id": "binding/v3w1/5/6",
+        "record_type": "route_binding",
+        "route": "/web/v3/route-surface-inventory/zone-5/protected-5",
+        "asset_kind": "route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/v3w1/5/support-6",
+        "deployment": "support-w1-6"
+      }
+    },
+    "descriptors": {
+      "operation/v3w1/5/post": {
+        "record_id": "operation/v3w1/5/post",
+        "record_type": "operation_descriptor",
+        "method": "POST",
+        "resource_policy_ref": "policy/v3w1/5/range-contract",
+        "parameter_contract": {
+          "kind": "range_contract",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/v3w1/5/support-2": {
+        "record_id": "operation/v3w1/5/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w1/5/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w1/5/support-3": {
+        "record_id": "operation/v3w1/5/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w1/5/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w1/5/support-4": {
+        "record_id": "operation/v3w1/5/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w1/5/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w1/5/support-5": {
+        "record_id": "operation/v3w1/5/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w1/5/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/v3w1/5/support-6": {
+        "record_id": "operation/v3w1/5/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/v3w1/5/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/v3w1/5/range-contract": {
+        "record_id": "policy/v3w1/5/range-contract",
+        "record_type": "resource_policy",
+        "rule": "range_contract",
+        "decision_reason": "parameter_out_of_range"
+      },
+      "policy/v3w1/5/support-2": {
+        "record_id": "policy/v3w1/5/support-2",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w1/5/support-3": {
+        "record_id": "policy/v3w1/5/support-3",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w1/5/support-4": {
+        "record_id": "policy/v3w1/5/support-4",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w1/5/support-5": {
+        "record_id": "policy/v3w1/5/support-5",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/v3w1/5/support-6": {
+        "record_id": "policy/v3w1/5/support-6",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "v3-route-surface-inventory-05-object": {
+        "object_id": "v3-route-surface-inventory-05-object",
+        "exists": true,
+        "owner_tenant": "A",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/web/v3/route-surface-inventory/zone-5/target",
+      "object_id": "v3-route-surface-inventory-05-object"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 400,
+      "outcome": "unknown",
+      "reason": "parameter_out_of_range",
+      "content_disclosed": false,
+      "deployment": "search-v13",
+      "policy_observed": true,
+      "backend_observed": false,
+      "response": {
+        "code": "parameter_out_of_range",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "v3-route-surface-inventory-05-object",
+      "deployment": "search-v13",
+      "policy_ref": "policy/v3w1/5/range-contract",
+      "outcome": "unknown",
+      "reason": "parameter_out_of_range",
+      "content_disclosed": false
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "v3 fresh instance: public search request violates its page-size contract",
+  "causal_signature": {
+    "method": "POST",
+    "policy_kind": "range_contract",
+    "outcome": "unknown",
+    "status": 400,
+    "reason": "parameter_out_of_range",
+    "content_disclosed": false,
+    "deployment_behavior": "search",
+    "policy_producer_reached": true,
+    "backend_producer_reached": false,
+    "object_exists": true,
+    "public_route_count": 1,
+    "protected_route_count": 5
+  }
+}

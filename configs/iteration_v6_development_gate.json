@@ -1,0 +1,54 @@
+{
+  "gate_version": "iteration-v6-development-gate-v0.1",
+  "frozen_before_p0_collection": true,
+  "purpose": "Development-only feasibility decision. It is not H1 statistical evidence and is not a token-effect analysis.",
+  "expected_p0_count": 18,
+  "required_task_families": 3,
+  "gates": {
+    "G1": {
+      "requirement": "All 18 P0 submissions are deterministically parsed and each independently satisfies the hard task validator.",
+      "threshold": 18,
+      "rationale": "Refinement opportunities are only meaningful on viable P0 plans; a structural or hard-task failure cannot be counted as a gap."
+    },
+    "G2": {
+      "requirement": "At least 6 of the 18 hard-valid P0 plans have two or more current refinement gaps.",
+      "threshold": 6,
+      "denominator": 18,
+      "rationale": "One third is a development-level lower bound for a natural multi-opportunity signal while remaining separate from any population claim."
+    },
+    "G3": {
+      "requirement": "The multi-gap P0 plans collectively contain gaps from at least 3 distinct refinement IDs and arise in at least 2 task families.",
+      "minimum_refinement_ids": 3,
+      "minimum_task_families": 2,
+      "rationale": "The signal must not be a single-dimension artifact or be restricted to only one task family."
+    },
+    "G4": {
+      "requirement": "At least 3 multi-gap P0 plans contain a pair pre-registered as independent.",
+      "threshold": 3,
+      "rationale": "This requires more than an isolated co-occurrence and excludes dependent or overlapping pairs from the independent-opportunity claim."
+    },
+    "G5": {
+      "requirement": "Independent blinded review finds no material disagreement on hard-plan viability, refinement status, referenced plan elements, refinement classification, or pair relation for every audited P0-refinement row.",
+      "threshold": "zero_material_disagreements",
+      "rationale": "A gap must remain distinguishable from a hard error, dependency, candidate branch, or evidence requirement."
+    },
+    "G6": {
+      "requirement": "Every counted gap belongs to a hard-valid P0 and the evaluator records only current-plan and fixed-fixture grounding with all three non-expansion flags false.",
+      "threshold": "all_counted_gaps",
+      "rationale": "The V6 mechanism must remain same-plan refinement rather than failure repair or another mechanism."
+    }
+  },
+  "verdicts": {
+    "PASS": "All gates pass. The project may enter, but must not automatically start, a separate ALL_AT_ONCE versus INCREMENTAL micro-pilot design phase.",
+    "FAIL": "The audit is valid but the new task distribution does not show enough independent, task-relevant refinement opportunities.",
+    "INVALID": "A collection, parsing, hard-task, protocol, or independent-review failure prevents a reliable feasibility decision."
+  },
+  "forbidden_followups_before_pass": [
+    "incremental_bridge",
+    "all_at_once_experiment",
+    "token_amplification_measurement",
+    "H1_start",
+    "replacement_sampling",
+    "taxonomy_tuning_on_same_p0_set"
+  ]
+}

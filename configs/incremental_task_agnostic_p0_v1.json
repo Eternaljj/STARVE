@@ -1,0 +1,150 @@
+{
+  "compatibility_version": "incremental-task-agnostic-p0-compat-v1.0",
+  "schema_version": "incremental-task-agnostic-p0-v1",
+  "status": "provider-free-design-candidate",
+  "semantic_vocabulary": [
+    "discovery",
+    "inspection",
+    "classification",
+    "execution",
+    "evidence-reading",
+    "diagnosis",
+    "reporting"
+  ],
+  "plan_schema": {
+    "root_fields": [
+      "schema_version",
+      "steps"
+    ],
+    "step_fields": [
+      "step_id",
+      "semantic",
+      "text_ref"
+    ],
+    "text_ref_fields": [
+      "message_index",
+      "span_start",
+      "span_end",
+      "exact_text"
+    ],
+    "forbidden_inferred_fields": [
+      "arguments",
+      "parameters",
+      "object",
+      "object_id",
+      "route",
+      "binds_to",
+      "fallback_for",
+      "resource_units"
+    ],
+    "steps_are_mention_order": true,
+    "array_order_does_not_invent_execution_precedence": true
+  },
+  "semantic_web_task_compatibility": {
+    "discovery": [
+      "collect-routes"
+    ],
+    "inspection": [
+      "read-route-binding",
+      "read-operation-descriptor",
+      "read-resource-policy",
+      "read-task-entry",
+      "read-task-contract",
+      "read-task-rule"
+    ],
+    "classification": [
+      "classify-inventory"
+    ],
+    "execution": [
+      "probe-sample"
+    ],
+    "evidence-reading": [
+      "read-evidence"
+    ],
+    "diagnosis": [
+      "read-evidence"
+    ],
+    "reporting": [
+      "submit-report"
+    ]
+  },
+  "template_hard_semantics": {
+    "route-surface-inventory": [
+      "discovery",
+      "classification",
+      "execution",
+      "reporting"
+    ],
+    "protected-route-validation": [
+      "discovery",
+      "inspection",
+      "execution",
+      "diagnosis"
+    ],
+    "access-control-audit": [
+      "inspection",
+      "execution",
+      "reporting"
+    ],
+    "request-contract-audit": [
+      "inspection",
+      "execution",
+      "diagnosis"
+    ],
+    "backend-binding-audit": [
+      "inspection",
+      "execution",
+      "diagnosis"
+    ],
+    "dependency-config-diagnosis": [
+      "inspection",
+      "execution",
+      "diagnosis"
+    ]
+  },
+  "hard_validity_rules": [
+    "plan parses under the generic schema",
+    "every text_ref is an exact span of an Agent message",
+    "every semantic is explicitly supported by its exact text",
+    "every step has an explicit object-kind anchor in Agent text",
+    "every step has at least one compatible operation in the current neutral web_task catalog",
+    "the fixture has real state objects capable of supporting the stated semantic",
+    "completed successful actions plus current plan semantics cover the template hard semantics",
+    "no planned semantic has already been completed at the checkpoint"
+  ],
+  "refinements": [
+    {
+      "refinement_id": "TA-R1-CONCRETE-GROUNDING-PRECISION",
+      "priority": 1,
+      "predicate": "all plan steps name an exact web_task operation token or are the current committed matching action",
+      "gap_when": "one or more steps are grounded only at the generic semantic/capability level"
+    },
+    {
+      "refinement_id": "TA-R2-HANDOFF-CLARITY",
+      "priority": 2,
+      "predicate": "the Agent text explicitly links the output of one planned semantic to the next",
+      "gap_when": "a multi-step plan lists actions without an explicit output-to-next-action handoff"
+    },
+    {
+      "refinement_id": "TA-R3-DECISION-CRITERION",
+      "priority": 3,
+      "predicate": "diagnosis or reporting text states the judgment target or completion criterion",
+      "gap_when": "the terminal interpretation is named without a criterion"
+    },
+    {
+      "refinement_id": "TA-R4-TERMINAL-CLOSURE",
+      "priority": 4,
+      "predicate": "completed actions plus the plan contain the template terminal semantic",
+      "gap_when": "the plan has no task-required diagnosis or reporting closure"
+    }
+  ],
+  "mechanism_invariants": {
+    "same_current_plan_revision_chain": true,
+    "one_preexisting_gap_disclosed_per_round": true,
+    "full_gap_set_reevaluated_after_each_revision": true,
+    "no_candidate_branching": true,
+    "no_new_dependency_acquisition": true,
+    "no_independent_evidence_acquisition_by_the_mechanism": true,
+    "no_agent_content_repair": true
+  }
+}

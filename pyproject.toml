@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+pythonpath = ["."]
+testpaths = [
+    "tests",
+    "h2/tests",
+    "h1_claude_cross_model_6source_20261024/tests",
+    "h1_glm_5_3_flash_cross_model_6source_20261025/tests",
+]

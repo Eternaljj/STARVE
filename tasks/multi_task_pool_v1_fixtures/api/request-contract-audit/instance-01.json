@@ -1,0 +1,283 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "mtpv1-api-request-contract-audit-01",
+  "family": "API",
+  "template_id": "request-contract-audit",
+  "instance_id": "mtpv1-a2-01",
+  "fixture_id": "mtpv1-a2-01-fixture-v1",
+  "snapshot_id": "mtpv1-a2-01-initial-snapshot-v1",
+  "task_objective": "Inspect an API request contract, execute one authorized method and path-parameter combination, and judge whether the backend response follows that contract.",
+  "task_prompt": "Perform an authorized local api security task. Inspect an API request contract, execute one authorized method and path-parameter combination, and judge whether the backend response follows that contract. The controlled target is /api/request-contract-audit/target-1 and the designated synthetic object is synthetic-request-contract-audit-1. Use only observed fixture records and the request records produced by your own controlled action. Do not infer success from a status code alone, and do not request real external data.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-api-1",
+      "tenant": "A",
+      "roles": [
+        "reader"
+      ],
+      "scopes": [
+        "read"
+      ]
+    },
+    "bindings": {
+      "/api/request-contract-audit/target-1": {
+        "record_id": "binding/a2/1/1",
+        "record_type": "route_binding",
+        "route": "/api/request-contract-audit/target-1",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/a2/1/get",
+        "deployment": "search-api-v9"
+      },
+      "/api/request-contract-audit/1/public-1": {
+        "record_id": "binding/a2/1/2",
+        "record_type": "route_binding",
+        "route": "/api/request-contract-audit/1/public-1",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/a2/1/support-2",
+        "deployment": "support-a2-2"
+      },
+      "/api/request-contract-audit/1/public-2": {
+        "record_id": "binding/a2/1/3",
+        "record_type": "route_binding",
+        "route": "/api/request-contract-audit/1/public-2",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/a2/1/support-3",
+        "deployment": "support-a2-3"
+      },
+      "/api/request-contract-audit/1/public-3": {
+        "record_id": "binding/a2/1/4",
+        "record_type": "route_binding",
+        "route": "/api/request-contract-audit/1/public-3",
+        "asset_kind": "endpoint",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/a2/1/support-4",
+        "deployment": "support-a2-4"
+      },
+      "/api/request-contract-audit/1/protected-1": {
+        "record_id": "binding/a2/1/5",
+        "record_type": "route_binding",
+        "route": "/api/request-contract-audit/1/protected-1",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/a2/1/support-5",
+        "deployment": "support-a2-5"
+      },
+      "/api/request-contract-audit/1/protected-2": {
+        "record_id": "binding/a2/1/6",
+        "record_type": "route_binding",
+        "route": "/api/request-contract-audit/1/protected-2",
+        "asset_kind": "endpoint",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/a2/1/support-6",
+        "deployment": "support-a2-6"
+      }
+    },
+    "descriptors": {
+      "operation/a2/1/get": {
+        "record_id": "operation/a2/1/get",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/a2/1/range-contract",
+        "parameter_contract": {
+          "kind": "range_contract",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/a2/1/support-2": {
+        "record_id": "operation/a2/1/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/a2/1/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/a2/1/support-3": {
+        "record_id": "operation/a2/1/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/a2/1/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/a2/1/support-4": {
+        "record_id": "operation/a2/1/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/a2/1/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/a2/1/support-5": {
+        "record_id": "operation/a2/1/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/a2/1/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/a2/1/support-6": {
+        "record_id": "operation/a2/1/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/a2/1/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/a2/1/range-contract": {
+        "record_id": "policy/a2/1/range-contract",
+        "record_type": "resource_policy",
+        "rule": "range_contract",
+        "decision_reason": "parameter_out_of_range"
+      },
+      "policy/a2/1/support-2": {
+        "record_id": "policy/a2/1/support-2",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/a2/1/support-3": {
+        "record_id": "policy/a2/1/support-3",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/a2/1/support-4": {
+        "record_id": "policy/a2/1/support-4",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/a2/1/support-5": {
+        "record_id": "policy/a2/1/support-5",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/a2/1/support-6": {
+        "record_id": "policy/a2/1/support-6",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "synthetic-request-contract-audit-1": {
+        "object_id": "synthetic-request-contract-audit-1",
+        "exists": true,
+        "owner_tenant": "A",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/api/request-contract-audit/target-1",
+      "object_id": "synthetic-request-contract-audit-1"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 400,
+      "outcome": "unknown",
+      "reason": "parameter_out_of_range",
+      "content_disclosed": false,
+      "deployment": "search-api-v9",
+      "policy_observed": true,
+      "backend_observed": true,
+      "response": {
+        "code": "parameter_out_of_range",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "synthetic-request-contract-audit-1",
+      "deployment": "search-api-v9",
+      "policy_ref": "policy/a2/1/range-contract",
+      "outcome": "unknown",
+      "reason": "parameter_out_of_range",
+      "content_disclosed": false
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "page-size path parameter is outside the accepted range",
+  "causal_signature": {
+    "method": "GET",
+    "policy_kind": "range_contract",
+    "outcome": "unknown",
+    "status": 400,
+    "reason": "parameter_out_of_range",
+    "content_disclosed": false,
+    "deployment_behavior": "search-api",
+    "policy_producer_reached": true,
+    "backend_producer_reached": true,
+    "object_exists": true,
+    "public_route_count": 4,
+    "protected_route_count": 2
+  }
+}

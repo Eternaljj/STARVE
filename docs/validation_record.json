@@ -1,0 +1,26 @@
+{
+  "release_version": "github-source-v1",
+  "validated_at": "2026-10-26T11:54:39.198748+00:00",
+  "execution_directory": "independent copy outside the original research workspace",
+  "python_version": "3.14.7",
+  "platform": "Linux",
+  "tests": {
+    "passed": 89,
+    "skipped": 1,
+    "subtests_passed": 24,
+    "skip_reason": "Historical DeepSeek pair ledger is distributed separately."
+  },
+  "h1_provider_free_admission": {
+    "passed": true,
+    "real_provider_requests": 0
+  },
+  "h2_offline_demo": {
+    "passed": true,
+    "trajectories": 15,
+    "families": 3,
+    "strategies": 5,
+    "all_three_states_observed_in_each_trajectory": true,
+    "real_provider_requests": 0
+  },
+  "common_credential_patterns_found": 0
+}

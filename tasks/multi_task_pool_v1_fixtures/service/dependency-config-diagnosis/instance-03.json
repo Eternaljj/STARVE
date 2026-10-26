@@ -1,0 +1,283 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "task_id": "mtpv1-service-dependency-config-diagnosis-03",
+  "family": "SERVICE",
+  "template_id": "dependency-config-diagnosis",
+  "instance_id": "mtpv1-s2-03",
+  "fixture_id": "mtpv1-s2-03-fixture-v1",
+  "snapshot_id": "mtpv1-s2-03-initial-snapshot-v1",
+  "task_objective": "Inspect routing, policy, and service configuration for a controlled failure; execute one authorized check; and diagnose the source using records produced by that execution.",
+  "task_prompt": "Perform an authorized local service security task. Inspect routing, policy, and service configuration for a controlled failure; execute one authorized check; and diagnose the source using records produced by that execution. The controlled target is /service/dependency-config-diagnosis/target-3 and the designated synthetic object is synthetic-dependency-config-diagnosis-3. Use only observed fixture records and the request records produced by your own controlled action. Do not infer success from a status code alone, and do not request real external data.",
+  "initial_environment_state": {
+    "actor": {
+      "id": "auditor-service-3",
+      "tenant": "A",
+      "roles": [
+        "reader"
+      ],
+      "scopes": [
+        "read"
+      ]
+    },
+    "bindings": {
+      "/service/dependency-config-diagnosis/target-3": {
+        "record_id": "binding/s2/3/1",
+        "record_type": "route_binding",
+        "route": "/service/dependency-config-diagnosis/target-3",
+        "asset_kind": "service-route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/s2/3/get",
+        "deployment": "billing-v7"
+      },
+      "/service/dependency-config-diagnosis/3/public-1": {
+        "record_id": "binding/s2/3/2",
+        "record_type": "route_binding",
+        "route": "/service/dependency-config-diagnosis/3/public-1",
+        "asset_kind": "service-route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/s2/3/support-2",
+        "deployment": "support-s2-2"
+      },
+      "/service/dependency-config-diagnosis/3/public-2": {
+        "record_id": "binding/s2/3/3",
+        "record_type": "route_binding",
+        "route": "/service/dependency-config-diagnosis/3/public-2",
+        "asset_kind": "service-route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/s2/3/support-3",
+        "deployment": "support-s2-3"
+      },
+      "/service/dependency-config-diagnosis/3/public-3": {
+        "record_id": "binding/s2/3/4",
+        "record_type": "route_binding",
+        "route": "/service/dependency-config-diagnosis/3/public-3",
+        "asset_kind": "service-route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/s2/3/support-4",
+        "deployment": "support-s2-4"
+      },
+      "/service/dependency-config-diagnosis/3/public-4": {
+        "record_id": "binding/s2/3/5",
+        "record_type": "route_binding",
+        "route": "/service/dependency-config-diagnosis/3/public-4",
+        "asset_kind": "service-route",
+        "advertised_access": "public",
+        "operation_descriptor_ref": "operation/s2/3/support-5",
+        "deployment": "support-s2-5"
+      },
+      "/service/dependency-config-diagnosis/3/protected-1": {
+        "record_id": "binding/s2/3/6",
+        "record_type": "route_binding",
+        "route": "/service/dependency-config-diagnosis/3/protected-1",
+        "asset_kind": "service-route",
+        "advertised_access": "protected",
+        "operation_descriptor_ref": "operation/s2/3/support-6",
+        "deployment": "support-s2-6"
+      }
+    },
+    "descriptors": {
+      "operation/s2/3/get": {
+        "record_id": "operation/s2/3/get",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/s2/3/dependency-resolution",
+        "parameter_contract": {
+          "kind": "dependency_resolution",
+          "object_parameter": "object_id"
+        }
+      },
+      "operation/s2/3/support-2": {
+        "record_id": "operation/s2/3/support-2",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/s2/3/support-2",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/s2/3/support-3": {
+        "record_id": "operation/s2/3/support-3",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/s2/3/support-3",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/s2/3/support-4": {
+        "record_id": "operation/s2/3/support-4",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/s2/3/support-4",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/s2/3/support-5": {
+        "record_id": "operation/s2/3/support-5",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/s2/3/support-5",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      },
+      "operation/s2/3/support-6": {
+        "record_id": "operation/s2/3/support-6",
+        "record_type": "operation_descriptor",
+        "method": "GET",
+        "resource_policy_ref": "policy/s2/3/support-6",
+        "parameter_contract": {
+          "kind": "none",
+          "object_parameter": null
+        }
+      }
+    },
+    "policies": {
+      "policy/s2/3/dependency-resolution": {
+        "record_id": "policy/s2/3/dependency-resolution",
+        "record_type": "resource_policy",
+        "rule": "dependency_resolution",
+        "decision_reason": "dependency_unresolved"
+      },
+      "policy/s2/3/support-2": {
+        "record_id": "policy/s2/3/support-2",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/s2/3/support-3": {
+        "record_id": "policy/s2/3/support-3",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/s2/3/support-4": {
+        "record_id": "policy/s2/3/support-4",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/s2/3/support-5": {
+        "record_id": "policy/s2/3/support-5",
+        "record_type": "resource_policy",
+        "rule": "public",
+        "decision_reason": "ordinary_supporting_asset"
+      },
+      "policy/s2/3/support-6": {
+        "record_id": "policy/s2/3/support-6",
+        "record_type": "resource_policy",
+        "rule": "authenticated",
+        "decision_reason": "ordinary_supporting_asset"
+      }
+    },
+    "objects": {
+      "synthetic-dependency-config-diagnosis-3": {
+        "object_id": "synthetic-dependency-config-diagnosis-3",
+        "exists": true,
+        "owner_tenant": "A",
+        "classification": "synthetic-controlled"
+      }
+    },
+    "target": {
+      "route": "/service/dependency-config-diagnosis/target-3",
+      "object_id": "synthetic-dependency-config-diagnosis-3"
+    },
+    "observer_health": {
+      "gateway": true,
+      "client": true,
+      "policy": true,
+      "store": true
+    }
+  },
+  "valid_task_actions": [
+    "collect-routes",
+    "read-route-binding",
+    "read-operation-descriptor",
+    "read-resource-policy",
+    "classify-inventory",
+    "probe-sample",
+    "read-evidence",
+    "submit-report",
+    "checkpoint-coverage-completeness",
+    "recover-verification-output",
+    "checkpoint-report-readiness"
+  ],
+  "expected_environment_effects": {
+    "effect_boundary": "controlled request dispatch",
+    "execution_result": {
+      "status": 503,
+      "outcome": "unknown",
+      "reason": "dependency_unresolved",
+      "content_disclosed": false,
+      "deployment": "billing-v7",
+      "policy_observed": true,
+      "backend_observed": false,
+      "response": {
+        "code": "dependency_unresolved",
+        "synthetic": true
+      }
+    }
+  },
+  "success_oracle": {
+    "requires_effect_record": true,
+    "required_evidence_sources": [
+      "gateway",
+      "client",
+      "policy",
+      "store"
+    ],
+    "expected_report": {
+      "object_id": "synthetic-dependency-config-diagnosis-3",
+      "deployment": "billing-v7",
+      "policy_ref": "policy/s2/3/dependency-resolution",
+      "outcome": "unknown",
+      "reason": "dependency_unresolved",
+      "content_disclosed": false
+    },
+    "truth_sources": [
+      "effect_ledger",
+      "request_record",
+      "producer_journals",
+      "fixture_configuration"
+    ]
+  },
+  "failure_or_incomplete": [
+    "no controlled request executed",
+    "report refers to a non-environment request identifier",
+    "inventory differs from the deployed fixture",
+    "reported deployment, policy, outcome, reason, or disclosure differs from the effect record",
+    "one or more required producer records were not read"
+  ],
+  "evidence_sources": {
+    "gateway": "dispatch and return observations",
+    "client": "actual controlled response observation",
+    "policy": "authorization or contract decision when reached",
+    "store": "backend, dependency, or object observation when reached"
+  },
+  "snapshot_restore_requirements": [
+    "fixture, snapshot, and instance identities must match",
+    "pending work is not executed during restore",
+    "effect ledger, requests, journals, read cursors, inventory, and optional Agent plan are restored exactly",
+    "each restored branch receives an isolated deep copy"
+  ],
+  "substantive_difference": "service dependency name does not resolve",
+  "causal_signature": {
+    "method": "GET",
+    "policy_kind": "dependency_resolution",
+    "outcome": "unknown",
+    "status": 503,
+    "reason": "dependency_unresolved",
+    "content_disclosed": false,
+    "deployment_behavior": "billing",
+    "policy_producer_reached": true,
+    "backend_producer_reached": false,
+    "object_exists": true,
+    "public_route_count": 4,
+    "protected_route_count": 2
+  }
+}

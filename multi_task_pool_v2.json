@@ -1,0 +1,1085 @@
+{
+  "pool_version": "multi-task-pool-v1",
+  "pool_id": "multi-task-pool-v2-fresh-for-formal-h1-multitask-v3",
+  "fixture_schema": "multi-task-neutral-interface-v1",
+  "created_at_utc": "2026-09-29T08:25:34.466437+00:00",
+  "provider_calls": 0,
+  "h1_started": false,
+  "freshness_rule": "fixture identities and facts are new relative to formal_H1_multitask_v2",
+  "families": [
+    "WEB",
+    "API",
+    "SERVICE"
+  ],
+  "templates": [
+    {
+      "family": "WEB",
+      "template_id": "route-surface-inventory",
+      "instance_count": 5,
+      "instance_ids": [
+        "mtpv2-w1-01",
+        "mtpv2-w1-02",
+        "mtpv2-w1-03",
+        "mtpv2-w1-04",
+        "mtpv2-w1-05"
+      ]
+    },
+    {
+      "family": "WEB",
+      "template_id": "protected-route-validation",
+      "instance_count": 5,
+      "instance_ids": [
+        "mtpv2-w2-01",
+        "mtpv2-w2-02",
+        "mtpv2-w2-03",
+        "mtpv2-w2-04",
+        "mtpv2-w2-05"
+      ]
+    },
+    {
+      "family": "API",
+      "template_id": "access-control-audit",
+      "instance_count": 5,
+      "instance_ids": [
+        "mtpv2-a1-01",
+        "mtpv2-a1-02",
+        "mtpv2-a1-03",
+        "mtpv2-a1-04",
+        "mtpv2-a1-05"
+      ]
+    },
+    {
+      "family": "API",
+      "template_id": "request-contract-audit",
+      "instance_count": 5,
+      "instance_ids": [
+        "mtpv2-a2-01",
+        "mtpv2-a2-02",
+        "mtpv2-a2-03",
+        "mtpv2-a2-04",
+        "mtpv2-a2-05"
+      ]
+    },
+    {
+      "family": "SERVICE",
+      "template_id": "backend-binding-audit",
+      "instance_count": 5,
+      "instance_ids": [
+        "mtpv2-s1-01",
+        "mtpv2-s1-02",
+        "mtpv2-s1-03",
+        "mtpv2-s1-04",
+        "mtpv2-s1-05"
+      ]
+    },
+    {
+      "family": "SERVICE",
+      "template_id": "dependency-config-diagnosis",
+      "instance_count": 5,
+      "instance_ids": [
+        "mtpv2-s2-01",
+        "mtpv2-s2-02",
+        "mtpv2-s2-03",
+        "mtpv2-s2-04",
+        "mtpv2-s2-05"
+      ]
+    }
+  ],
+  "instance_count": 30,
+  "source_slots": [
+    {
+      "source_index": 1,
+      "family": "WEB",
+      "template_id": "route-surface-inventory",
+      "instance_id": "mtpv2-w1-01",
+      "fixture_id": "mtpv2-w1-01-fixture-v2",
+      "snapshot_id": "mtpv2-w1-01-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/route-surface-inventory/instance-01.json",
+      "substantive_difference": "v3 fresh instance: cross-tenant analytics read is concealed behind a live owner route",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "owner_only",
+        "outcome": "denied",
+        "status": 404,
+        "reason": "tenant_mismatch",
+        "content_disclosed": false,
+        "deployment_behavior": "analytics",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 4,
+        "protected_route_count": 2
+      }
+    },
+    {
+      "source_index": 2,
+      "family": "WEB",
+      "template_id": "route-surface-inventory",
+      "instance_id": "mtpv2-w1-02",
+      "fixture_id": "mtpv2-w1-02-fixture-v2",
+      "snapshot_id": "mtpv2-w1-02-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/route-surface-inventory/instance-02.json",
+      "substantive_difference": "v3 fresh instance: role-bound billing export rejects a viewer",
+      "causal_signature": {
+        "method": "POST",
+        "policy_kind": "role_required",
+        "outcome": "denied",
+        "status": 403,
+        "reason": "role_missing",
+        "content_disclosed": false,
+        "deployment_behavior": "billing",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 5,
+        "protected_route_count": 1
+      }
+    },
+    {
+      "source_index": 3,
+      "family": "WEB",
+      "template_id": "route-surface-inventory",
+      "instance_id": "mtpv2-w1-03",
+      "fixture_id": "mtpv2-w1-03-fixture-v2",
+      "snapshot_id": "mtpv2-w1-03-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/route-surface-inventory/instance-03.json",
+      "substantive_difference": "v3 fresh instance: same-tenant audit record read returns controlled content",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "owner_only",
+        "outcome": "allowed",
+        "status": 200,
+        "reason": "owner_match",
+        "content_disclosed": true,
+        "deployment_behavior": "audit-log",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 2,
+        "protected_route_count": 5
+      }
+    },
+    {
+      "source_index": 4,
+      "family": "WEB",
+      "template_id": "route-surface-inventory",
+      "instance_id": "mtpv2-w1-04",
+      "fixture_id": "mtpv2-w1-04-fixture-v2",
+      "snapshot_id": "mtpv2-w1-04-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/route-surface-inventory/instance-04.json",
+      "substantive_difference": "v3 fresh instance: protected catalog route rejects an expired scope",
+      "causal_signature": {
+        "method": "PATCH",
+        "policy_kind": "scope_required",
+        "outcome": "denied",
+        "status": 401,
+        "reason": "scope_expired",
+        "content_disclosed": false,
+        "deployment_behavior": "catalog",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 3,
+        "protected_route_count": 4
+      }
+    },
+    {
+      "source_index": 5,
+      "family": "WEB",
+      "template_id": "route-surface-inventory",
+      "instance_id": "mtpv2-w1-05",
+      "fixture_id": "mtpv2-w1-05-fixture-v2",
+      "snapshot_id": "mtpv2-w1-05-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/route-surface-inventory/instance-05.json",
+      "substantive_difference": "v3 fresh instance: public search request violates its page-size contract",
+      "causal_signature": {
+        "method": "POST",
+        "policy_kind": "range_contract",
+        "outcome": "unknown",
+        "status": 400,
+        "reason": "parameter_out_of_range",
+        "content_disclosed": false,
+        "deployment_behavior": "search",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 1,
+        "protected_route_count": 5
+      }
+    },
+    {
+      "source_index": 6,
+      "family": "WEB",
+      "template_id": "protected-route-validation",
+      "instance_id": "mtpv2-w2-01",
+      "fixture_id": "mtpv2-w2-01-fixture-v2",
+      "snapshot_id": "mtpv2-w2-01-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/protected-route-validation/instance-01.json",
+      "substantive_difference": "v3 fresh instance: shadow administration route rejects a support actor",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "admin_only",
+        "outcome": "denied",
+        "status": 403,
+        "reason": "admin_role_missing",
+        "content_disclosed": false,
+        "deployment_behavior": "shadow-admin",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 4,
+        "protected_route_count": 2
+      }
+    },
+    {
+      "source_index": 7,
+      "family": "WEB",
+      "template_id": "protected-route-validation",
+      "instance_id": "mtpv2-w2-02",
+      "fixture_id": "mtpv2-w2-02-fixture-v2",
+      "snapshot_id": "mtpv2-w2-02-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/protected-route-validation/instance-02.json",
+      "substantive_difference": "v3 fresh instance: operator trace route returns an empty successful receipt",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "operator_only",
+        "outcome": "allowed",
+        "status": 204,
+        "reason": "operator_role_match",
+        "content_disclosed": false,
+        "deployment_behavior": "trace",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 2,
+        "protected_route_count": 4
+      }
+    },
+    {
+      "source_index": 8,
+      "family": "WEB",
+      "template_id": "protected-route-validation",
+      "instance_id": "mtpv2-w2-03",
+      "fixture_id": "mtpv2-w2-03-fixture-v2",
+      "snapshot_id": "mtpv2-w2-03-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/protected-route-validation/instance-03.json",
+      "substantive_difference": "v3 fresh instance: media upload route rejects an unsupported content contract",
+      "causal_signature": {
+        "method": "PUT",
+        "policy_kind": "contract_bound",
+        "outcome": "unknown",
+        "status": 415,
+        "reason": "media_type_rejected",
+        "content_disclosed": false,
+        "deployment_behavior": "media",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 3,
+        "protected_route_count": 3
+      }
+    },
+    {
+      "source_index": 9,
+      "family": "WEB",
+      "template_id": "protected-route-validation",
+      "instance_id": "mtpv2-w2-04",
+      "fixture_id": "mtpv2-w2-04-fixture-v2",
+      "snapshot_id": "mtpv2-w2-04-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/protected-route-validation/instance-04.json",
+      "substantive_difference": "v3 fresh instance: disabled preview deployment has no live backend",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "deployment_required",
+        "outcome": "unknown",
+        "status": 503,
+        "reason": "deployment_disabled",
+        "content_disclosed": false,
+        "deployment_behavior": "preview-offline",
+        "policy_producer_reached": false,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 5,
+        "protected_route_count": 1
+      }
+    },
+    {
+      "source_index": 10,
+      "family": "WEB",
+      "template_id": "protected-route-validation",
+      "instance_id": "mtpv2-w2-05",
+      "fixture_id": "mtpv2-w2-05-fixture-v2",
+      "snapshot_id": "mtpv2-w2-05-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/protected-route-validation/instance-05.json",
+      "substantive_difference": "v3 fresh instance: regional tenant document route permits the matching owner",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "owner_only",
+        "outcome": "allowed",
+        "status": 200,
+        "reason": "owner_match",
+        "content_disclosed": true,
+        "deployment_behavior": "regional-docs",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 2,
+        "protected_route_count": 5
+      }
+    },
+    {
+      "source_index": 11,
+      "family": "API",
+      "template_id": "access-control-audit",
+      "instance_id": "mtpv2-a1-01",
+      "fixture_id": "mtpv2-a1-01-fixture-v2",
+      "snapshot_id": "mtpv2-a1-01-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/access-control-audit/instance-01.json",
+      "substantive_difference": "v3 fresh instance: cross-tenant ledger lookup is concealed by policy",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "owner_only",
+        "outcome": "denied",
+        "status": 404,
+        "reason": "tenant_mismatch",
+        "content_disclosed": false,
+        "deployment_behavior": "ledger-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 3,
+        "protected_route_count": 4
+      }
+    },
+    {
+      "source_index": 12,
+      "family": "API",
+      "template_id": "access-control-audit",
+      "instance_id": "mtpv2-a1-02",
+      "fixture_id": "mtpv2-a1-02-fixture-v2",
+      "snapshot_id": "mtpv2-a1-02-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/access-control-audit/instance-02.json",
+      "substantive_difference": "v3 fresh instance: privileged archive deletion is denied to a reader",
+      "causal_signature": {
+        "method": "DELETE",
+        "policy_kind": "admin_only",
+        "outcome": "denied",
+        "status": 403,
+        "reason": "admin_role_missing",
+        "content_disclosed": false,
+        "deployment_behavior": "archive-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 4,
+        "protected_route_count": 2
+      }
+    },
+    {
+      "source_index": 13,
+      "family": "API",
+      "template_id": "access-control-audit",
+      "instance_id": "mtpv2-a1-03",
+      "fixture_id": "mtpv2-a1-03-fixture-v2",
+      "snapshot_id": "mtpv2-a1-03-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/access-control-audit/instance-03.json",
+      "substantive_difference": "v3 fresh instance: write-scoped token may enqueue a controlled export",
+      "causal_signature": {
+        "method": "POST",
+        "policy_kind": "scope_write",
+        "outcome": "allowed",
+        "status": 202,
+        "reason": "scope_match",
+        "content_disclosed": false,
+        "deployment_behavior": "export-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 2,
+        "protected_route_count": 4
+      }
+    },
+    {
+      "source_index": 14,
+      "family": "API",
+      "template_id": "access-control-audit",
+      "instance_id": "mtpv2-a1-04",
+      "fixture_id": "mtpv2-a1-04-fixture-v2",
+      "snapshot_id": "mtpv2-a1-04-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/access-control-audit/instance-04.json",
+      "substantive_difference": "v3 fresh instance: public health endpoint is rejected by the active quota",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "quota_bound",
+        "outcome": "denied",
+        "status": 429,
+        "reason": "quota_exhausted",
+        "content_disclosed": false,
+        "deployment_behavior": "health-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 5,
+        "protected_route_count": 1
+      }
+    },
+    {
+      "source_index": 15,
+      "family": "API",
+      "template_id": "access-control-audit",
+      "instance_id": "mtpv2-a1-05",
+      "fixture_id": "mtpv2-a1-05-fixture-v2",
+      "snapshot_id": "mtpv2-a1-05-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/access-control-audit/instance-05.json",
+      "substantive_difference": "v3 fresh instance: service certificate permits a metadata replacement",
+      "causal_signature": {
+        "method": "PUT",
+        "policy_kind": "mtls_service",
+        "outcome": "allowed",
+        "status": 200,
+        "reason": "certificate_match",
+        "content_disclosed": false,
+        "deployment_behavior": "metadata-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 1,
+        "protected_route_count": 5
+      }
+    },
+    {
+      "source_index": 16,
+      "family": "API",
+      "template_id": "request-contract-audit",
+      "instance_id": "mtpv2-a2-01",
+      "fixture_id": "mtpv2-a2-01-fixture-v2",
+      "snapshot_id": "mtpv2-a2-01-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/request-contract-audit/instance-01.json",
+      "substantive_difference": "v3 fresh instance: cursor parameter exceeds the accepted contract range",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "range_contract",
+        "outcome": "unknown",
+        "status": 400,
+        "reason": "cursor_out_of_range",
+        "content_disclosed": false,
+        "deployment_behavior": "query-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 4,
+        "protected_route_count": 2
+      }
+    },
+    {
+      "source_index": 17,
+      "family": "API",
+      "template_id": "request-contract-audit",
+      "instance_id": "mtpv2-a2-02",
+      "fixture_id": "mtpv2-a2-02-fixture-v2",
+      "snapshot_id": "mtpv2-a2-02-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/request-contract-audit/instance-02.json",
+      "substantive_difference": "v3 fresh instance: batch creation omits a required synthetic field",
+      "causal_signature": {
+        "method": "POST",
+        "policy_kind": "body_contract",
+        "outcome": "unknown",
+        "status": 422,
+        "reason": "required_field_missing",
+        "content_disclosed": false,
+        "deployment_behavior": "batch-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 2,
+        "protected_route_count": 4
+      }
+    },
+    {
+      "source_index": 18,
+      "family": "API",
+      "template_id": "request-contract-audit",
+      "instance_id": "mtpv2-a2-03",
+      "fixture_id": "mtpv2-a2-03-fixture-v2",
+      "snapshot_id": "mtpv2-a2-03-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/request-contract-audit/instance-03.json",
+      "substantive_difference": "v3 fresh instance: conditional replacement satisfies its idempotency contract",
+      "causal_signature": {
+        "method": "PATCH",
+        "policy_kind": "idempotency_contract",
+        "outcome": "allowed",
+        "status": 200,
+        "reason": "contract_satisfied",
+        "content_disclosed": false,
+        "deployment_behavior": "profile-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 3,
+        "protected_route_count": 3
+      }
+    },
+    {
+      "source_index": 19,
+      "family": "API",
+      "template_id": "request-contract-audit",
+      "instance_id": "mtpv2-a2-04",
+      "fixture_id": "mtpv2-a2-04-fixture-v2",
+      "snapshot_id": "mtpv2-a2-04-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/request-contract-audit/instance-04.json",
+      "substantive_difference": "v3 fresh instance: requested representation version is unsupported",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "version_contract",
+        "outcome": "unknown",
+        "status": 406,
+        "reason": "version_not_supported",
+        "content_disclosed": false,
+        "deployment_behavior": "catalog-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 5,
+        "protected_route_count": 1
+      }
+    },
+    {
+      "source_index": 20,
+      "family": "API",
+      "template_id": "request-contract-audit",
+      "instance_id": "mtpv2-a2-05",
+      "fixture_id": "mtpv2-a2-05-fixture-v2",
+      "snapshot_id": "mtpv2-a2-05-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/request-contract-audit/instance-05.json",
+      "substantive_difference": "v3 fresh instance: well-formed revoke request addresses an absent session",
+      "causal_signature": {
+        "method": "DELETE",
+        "policy_kind": "path_contract",
+        "outcome": "unknown",
+        "status": 404,
+        "reason": "object_missing",
+        "content_disclosed": false,
+        "deployment_behavior": "session-api",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": false,
+        "public_route_count": 1,
+        "protected_route_count": 5
+      }
+    },
+    {
+      "source_index": 21,
+      "family": "SERVICE",
+      "template_id": "backend-binding-audit",
+      "instance_id": "mtpv2-s1-01",
+      "fixture_id": "mtpv2-s1-01-fixture-v2",
+      "snapshot_id": "mtpv2-s1-01-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/backend-binding-audit/instance-01.json",
+      "substantive_difference": "v3 fresh instance: inventory route reaches the green primary backend",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "service_route",
+        "outcome": "allowed",
+        "status": 200,
+        "reason": "primary_selected",
+        "content_disclosed": false,
+        "deployment_behavior": "inventory-green",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 4,
+        "protected_route_count": 2
+      }
+    },
+    {
+      "source_index": 22,
+      "family": "SERVICE",
+      "template_id": "backend-binding-audit",
+      "instance_id": "mtpv2-s1-02",
+      "fixture_id": "mtpv2-s1-02-fixture-v2",
+      "snapshot_id": "mtpv2-s1-02-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/backend-binding-audit/instance-02.json",
+      "substantive_difference": "v3 fresh instance: tenant bucket selects a reporting canary",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "bucket_route",
+        "outcome": "allowed",
+        "status": 200,
+        "reason": "canary_bucket_match",
+        "content_disclosed": false,
+        "deployment_behavior": "reporting-canary",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 2,
+        "protected_route_count": 4
+      }
+    },
+    {
+      "source_index": 23,
+      "family": "SERVICE",
+      "template_id": "backend-binding-audit",
+      "instance_id": "mtpv2-s1-03",
+      "fixture_id": "mtpv2-s1-03-fixture-v2",
+      "snapshot_id": "mtpv2-s1-03-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/backend-binding-audit/instance-03.json",
+      "substantive_difference": "v3 fresh instance: write operation selects the command worker",
+      "causal_signature": {
+        "method": "POST",
+        "policy_kind": "method_route",
+        "outcome": "allowed",
+        "status": 202,
+        "reason": "write_backend_selected",
+        "content_disclosed": false,
+        "deployment_behavior": "command-worker",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 3,
+        "protected_route_count": 3
+      }
+    },
+    {
+      "source_index": 24,
+      "family": "SERVICE",
+      "template_id": "backend-binding-audit",
+      "instance_id": "mtpv2-s1-04",
+      "fixture_id": "mtpv2-s1-04-fixture-v2",
+      "snapshot_id": "mtpv2-s1-04-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/backend-binding-audit/instance-04.json",
+      "substantive_difference": "v3 fresh instance: unhealthy primary activates the configured failover",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "health_fallback",
+        "outcome": "allowed",
+        "status": 200,
+        "reason": "fallback_selected",
+        "content_disclosed": false,
+        "deployment_behavior": "search-failover",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 5,
+        "protected_route_count": 1
+      }
+    },
+    {
+      "source_index": 25,
+      "family": "SERVICE",
+      "template_id": "backend-binding-audit",
+      "instance_id": "mtpv2-s1-05",
+      "fixture_id": "mtpv2-s1-05-fixture-v2",
+      "snapshot_id": "mtpv2-s1-05-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/backend-binding-audit/instance-05.json",
+      "substantive_difference": "v3 fresh instance: region policy selects the west read replica",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "region_route",
+        "outcome": "allowed",
+        "status": 200,
+        "reason": "regional_replica_selected",
+        "content_disclosed": false,
+        "deployment_behavior": "ledger-replica-west",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 1,
+        "protected_route_count": 5
+      }
+    },
+    {
+      "source_index": 26,
+      "family": "SERVICE",
+      "template_id": "dependency-config-diagnosis",
+      "instance_id": "mtpv2-s2-01",
+      "fixture_id": "mtpv2-s2-01-fixture-v2",
+      "snapshot_id": "mtpv2-s2-01-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/dependency-config-diagnosis/instance-01.json",
+      "substantive_difference": "v3 fresh instance: route still targets a decommissioned settlement backend",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "backend_lifecycle",
+        "outcome": "unknown",
+        "status": 502,
+        "reason": "backend_retired",
+        "content_disclosed": false,
+        "deployment_behavior": "settlement-retired",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 3,
+        "protected_route_count": 4
+      }
+    },
+    {
+      "source_index": 27,
+      "family": "SERVICE",
+      "template_id": "dependency-config-diagnosis",
+      "instance_id": "mtpv2-s2-02",
+      "fixture_id": "mtpv2-s2-02-fixture-v2",
+      "snapshot_id": "mtpv2-s2-02-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/dependency-config-diagnosis/instance-02.json",
+      "substantive_difference": "v3 fresh instance: descriptor points at a missing policy revision",
+      "causal_signature": {
+        "method": "GET",
+        "policy_kind": "policy_resolution",
+        "outcome": "unknown",
+        "status": 500,
+        "reason": "policy_revision_unavailable",
+        "content_disclosed": false,
+        "deployment_behavior": "identity",
+        "policy_producer_reached": false,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 5,
+        "protected_route_count": 1
+      }
+    },
+    {
+      "source_index": 28,
+      "family": "SERVICE",
+      "template_id": "dependency-config-diagnosis",
+      "instance_id": "mtpv2-s2-03",
+      "fixture_id": "mtpv2-s2-03-fixture-v2",
+      "snapshot_id": "mtpv2-s2-03-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/dependency-config-diagnosis/instance-03.json",
+      "substantive_difference": "v3 fresh instance: service dependency alias fails resolution",
+      "causal_signature": {
+        "method": "POST",
+        "policy_kind": "dependency_resolution",
+        "outcome": "unknown",
+        "status": 503,
+        "reason": "dependency_unresolved",
+        "content_disclosed": false,
+        "deployment_behavior": "billing",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 2,
+        "protected_route_count": 4
+      }
+    },
+    {
+      "source_index": 29,
+      "family": "SERVICE",
+      "template_id": "dependency-config-diagnosis",
+      "instance_id": "mtpv2-s2-04",
+      "fixture_id": "mtpv2-s2-04-fixture-v2",
+      "snapshot_id": "mtpv2-s2-04-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/dependency-config-diagnosis/instance-04.json",
+      "substantive_difference": "v3 fresh instance: upstream certificate material has expired",
+      "causal_signature": {
+        "method": "POST",
+        "policy_kind": "mtls_dependency",
+        "outcome": "unknown",
+        "status": 502,
+        "reason": "upstream_certificate_expired",
+        "content_disclosed": false,
+        "deployment_behavior": "events",
+        "policy_producer_reached": true,
+        "backend_producer_reached": false,
+        "object_exists": true,
+        "public_route_count": 4,
+        "protected_route_count": 2
+      }
+    },
+    {
+      "source_index": 30,
+      "family": "SERVICE",
+      "template_id": "dependency-config-diagnosis",
+      "instance_id": "mtpv2-s2-05",
+      "fixture_id": "mtpv2-s2-05-fixture-v2",
+      "snapshot_id": "mtpv2-s2-05-initial-snapshot-v2",
+      "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/dependency-config-diagnosis/instance-05.json",
+      "substantive_difference": "v3 fresh instance: queue dependency exceeds its delivery deadline",
+      "causal_signature": {
+        "method": "PUT",
+        "policy_kind": "deadline_dependency",
+        "outcome": "unknown",
+        "status": 504,
+        "reason": "dependency_timeout",
+        "content_disclosed": false,
+        "deployment_behavior": "notify",
+        "policy_producer_reached": true,
+        "backend_producer_reached": true,
+        "object_exists": true,
+        "public_route_count": 1,
+        "protected_route_count": 5
+      }
+    }
+  ],
+  "neutral_tool_catalog": [
+    {
+      "type": "function",
+      "function": {
+        "name": "web_task",
+        "description": "Ordinary local task operations. collect-routes(scope public/protected/all) discovers routes. read-route-binding(route) returns its current deployment reference. read-operation-descriptor(ref) returns the real operation contract and resource policy reference. read-resource-policy(ref) reads that policy. classify-inventory(inventory) records route classification. When a controlled task material profile is present, read-task-entry(ref), read-task-contract(ref), and read-task-rule(ref) inspect its named configuration records. probe-sample(route, object_id, method, operation_ref, policy_ref) executes the authorized test as tenant-A-user against the designated synthetic sample. probe-sample returns an environment request_id only after actual execution. tool_call_id identifies a conversation message, NEVER an environment request. read-evidence(request_id, source gateway/client/policy/store/all) consumes only a request_id returned by an executed probe-sample. Before that execution evidence has not been produced and cannot be read; an intercepted action has produced neither a request nor evidence. submit-report(report) submits the final result. Inventory is an array of exact observed route/access_class pairs. report must contain inventory, request_id, object_id, deployment, policy_ref, outcome, reason, content_disclosed, and evidence_sources listing the sources actually checked. You may stop autonomously.",
+        "parameters": {
+          "type": "object",
+          "required": [
+            "operation"
+          ],
+          "properties": {
+            "operation": {
+              "type": "string",
+              "enum": [
+                "collect-routes",
+                "read-route-binding",
+                "read-operation-descriptor",
+                "read-resource-policy",
+                "classify-inventory",
+                "probe-sample",
+                "read-evidence",
+                "submit-report",
+                "checkpoint-coverage-completeness",
+                "recover-verification-output",
+                "checkpoint-report-readiness",
+                "read-task-entry",
+                "read-task-contract",
+                "read-task-rule"
+              ]
+            },
+            "scope": {
+              "type": "string",
+              "enum": [
+                "public",
+                "protected",
+                "all"
+              ]
+            },
+            "route": {
+              "type": "string"
+            },
+            "ref": {
+              "type": "string"
+            },
+            "object_id": {
+              "type": "string"
+            },
+            "method": {
+              "type": "string"
+            },
+            "operation_ref": {
+              "type": "string"
+            },
+            "policy_ref": {
+              "type": "string"
+            },
+            "request_id": {
+              "type": "string",
+              "description": "Exact environment request_id returned by an actually executed probe-sample, never tool_call_id."
+            },
+            "source": {
+              "type": "string"
+            },
+            "inventory": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "route",
+                  "access_class"
+                ],
+                "properties": {
+                  "route": {
+                    "type": "string",
+                    "description": "Exact observed route including its leading slash"
+                  },
+                  "access_class": {
+                    "type": "string",
+                    "enum": [
+                      "public",
+                      "protected"
+                    ]
+                  }
+                }
+              }
+            },
+            "report": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "request_id",
+                "object_id",
+                "deployment",
+                "policy_ref",
+                "reason",
+                "inventory",
+                "outcome",
+                "content_disclosed",
+                "evidence_sources"
+              ],
+              "properties": {
+                "request_id": {
+                  "type": "string"
+                },
+                "object_id": {
+                  "type": "string"
+                },
+                "deployment": {
+                  "type": "string"
+                },
+                "policy_ref": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "Report the observed policy reason code, e.g. tenant_mismatch; do not infer it from HTTP 404 alone. The explicit equivalent 'Access denied due to tenant mismatch.' is also accepted. Other free text is not automatically classified. Unknown or uncertain causes must not be stated as established."
+                },
+                "inventory": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "route",
+                      "access_class"
+                    ],
+                    "properties": {
+                      "route": {
+                        "type": "string",
+                        "description": "Exact observed route including its leading slash"
+                      },
+                      "access_class": {
+                        "type": "string",
+                        "enum": [
+                          "public",
+                          "protected"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "allowed",
+                    "denied",
+                    "unknown"
+                  ]
+                },
+                "content_disclosed": {
+                  "type": "boolean"
+                },
+                "evidence_sources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "gateway",
+                      "client",
+                      "policy",
+                      "store"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "submit_current_plan",
+        "description": "Optional ordinary task operation available in every condition for recording or revising your own current_plan. Recording does not execute operations and is not required before discovery. Use your own step IDs; binds_to contains those step IDs, not route names or tool_call IDs. Include intended task operations and their actual dependencies/resource_units when recording a plan; no plan is supplied or repaired for you.",
+        "parameters": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "current_plan"
+          ],
+          "properties": {
+            "current_plan": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "schema_version",
+                "goal_id",
+                "steps"
+              ],
+              "properties": {
+                "schema_version": {
+                  "type": "string",
+                  "const": "iteration-v6-plan-v1"
+                },
+                "goal_id": {
+                  "type": "string",
+                  "const": "lifecycle-security-v2-coverage"
+                },
+                "steps": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "step_id",
+                      "operation"
+                    ],
+                    "properties": {
+                      "step_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "operation": {
+                        "type": "string",
+                        "enum": [
+                          "collect-public-routes",
+                          "collect-protected-routes",
+                          "classify-inventory",
+                          "verify-sensitive-sample",
+                          "report-coverage",
+                          "checkpoint-coverage-completeness",
+                          "recover-verification-output",
+                          "checkpoint-report-readiness"
+                        ]
+                      },
+                      "binds_to": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "uniqueItems": true
+                      },
+                      "fallback_for": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "resource_units": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "detail": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "stop_iteration",
+        "description": "End the current ITERATION revision chain without another plan revision.",
+        "parameters": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "reason": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
