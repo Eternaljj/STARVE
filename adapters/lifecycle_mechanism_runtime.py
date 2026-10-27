@@ -1,33 +1,17 @@
-"""Pre-effect lifecycle ingress with explicit legacy response-boundary support.
-
-No natural-opportunity audit is consulted. Task material must conform to the
-original cores; an incompatible guard or unqualified P0 is an explicit error.
-"""
+"""Shared pre-effect lifecycle and Dependency V6 guard support."""
 from copy import deepcopy
 import json
 
-from adapters.g0_shared_envelope import shared_application
 from adapters.lifecycle_branch_runtime import LifecycleBranchRuntime
-from adapters.lifecycle_trap_bindings import (
-    DependencyBindingUnavailable, LifecycleCandidateProvider, LifecycleEvidenceProvider,
-    dependency_binding, dependency_tool_effect,
-)
-from adapters.lifecycle_v2_runtime import plan_task
+from adapters.lifecycle_trap_bindings import DependencyBindingUnavailable, dependency_binding, dependency_tool_effect
 from adapters.tool_response_exposure import ToolResponseExposure
-from run_lifecycle_v2_feasibility import neutral_interface
-from traps.dependency_v4 import (
-    DEPENDENCY_V4_PROFILE_VERSION,
-    DependencyV4StateMachine,
-    assess_v4_applicability,
-    get_dependency_v4_dose_profile,
-)
-from traps.iteration_v6_incremental import (
-    IterationV6IncrementalSession, ProtocolError, parse_provider_action, stop_tool_definition,
-)
-from traps.v2 import build_v2_trap_application
+from core.lifecycle_session import neutral_interface
+from core.dependency import assess_dependency_applicability
+from core.plan import stop_tool_definition
+from traps.dependency_v6 import DEPENDENCY_V6_IMPLEMENTATION, DEPENDENCY_V6_PROFILE_VERSION, DependencyV6StateMachine
 
 
-CONDITIONS = ("BASELINE", "BRANCH", "DEPENDENCY", "EVIDENCE", "INCREMENTAL")
+CONDITIONS = ("BASELINE", "BRANCH", "DEPENDENCY", "EVIDENCE")
 
 class IncompatibleLifecycleBinding(ValueError):
     """A frozen requirement cannot be met by this real response boundary."""
@@ -46,69 +30,37 @@ def lifecycle_interaction_interface():
     return interface
 
 
-class LegacyToolResponseRuntime(LifecycleBranchRuntime):
-    pre_effect = False
+class _MechanismHooks(LifecycleBranchRuntime):
+    pre_effect = True
+
     @classmethod
-    def restore(
-        cls,
-        checkpoint,
-        provider,
-        *,
-        condition="BASELINE",
-        dependency_profile_version=DEPENDENCY_V4_PROFILE_VERSION,
-    ):
-        if condition not in CONDITIONS:
-            raise ValueError("mechanism condition must be explicit")
-        app = None
-        if condition == "BRANCH":
-            catalog = LifecycleCandidateProvider(checkpoint["environment_snapshot"])
-            app = build_v2_trap_application("BRANCH_EXPANSION", checkpoint["checkpoint_id"],
-                checkpoint["state"], catalog.task_id, {"candidate_provider": catalog})
-        obj = super().restore(checkpoint, provider, application=app,
-                              interface=lifecycle_interaction_interface())
+    def restore(cls, checkpoint, provider, *, condition='BASELINE', dependency_profile_version=DEPENDENCY_V6_PROFILE_VERSION):
+        if dependency_profile_version != DEPENDENCY_V6_PROFILE_VERSION:
+            raise ValueError('only the current Dependency V6 profile is supported')
+        if condition not in {'BASELINE', 'DEPENDENCY'}:
+            raise ValueError('restore a latest Trap through its explicit carrier')
+        obj = super().restore(checkpoint, provider, interface=lifecycle_interaction_interface())
         obj.condition = condition
-        obj.target_state = checkpoint["state"]
+        obj.target_state = checkpoint['state']
         obj.core = None
         obj.mechanism_reason = None
         obj.protocol_error = None
-        obj.provider_call_id = None
         obj.current_usage = None
-        obj.evidence_payload = None
-        obj.evidence_position = 0
         obj.dependency_profile_version = None
         obj.dependency_max_optional_followups = None
         try:
-            if condition == "DEPENDENCY":
-                profile = get_dependency_v4_dose_profile(dependency_profile_version)
+            if condition == 'DEPENDENCY':
                 try:
-                    graph, action = dependency_binding(checkpoint, active=obj.pre_effect)
+                    graph, action = dependency_binding(checkpoint, active=True)
                 except DependencyBindingUnavailable as exc:
                     raise IncompatibleLifecycleBinding(exc.reason, evidence=exc.evidence) from exc
-                contract, reason = assess_v4_applicability(graph, checkpoint["state"], action,
-                    {"action_committed": True, "action_effect_applied": False})
+                contract, reason = assess_dependency_applicability(graph, checkpoint['state'], action,
+                    {'action_committed': True, 'action_effect_applied': False})
                 if contract is None:
                     raise IncompatibleLifecycleBinding(reason)
-                obj.core = DependencyV4StateMachine(
-                    graph, contract, graph.task_family, action,
-                    max_optional_followups=profile.max_optional_followups,
-                )
-                obj.dependency_profile_version = profile.profile_version
-                obj.dependency_max_optional_followups = profile.max_optional_followups
-                if not obj.pre_effect:
-                    obj._check_dependency_effect_boundary(checkpoint["pending_tool_call"])
-            elif condition == "INCREMENTAL":
-                p0 = deepcopy(checkpoint["current_plan"])
-                call = checkpoint["pending_tool_call"]
-                if call["function"]["name"] == "submit_current_plan":
-                    p0 = json.loads(call["function"]["arguments"]).get("current_plan")
-                obj.core = IterationV6IncrementalSession(checkpoint_id=checkpoint["checkpoint_id"],
-                    state_label=checkpoint["state"], task=plan_task(), p0=p0)
-                if obj.core.terminal:
-                    raise IncompatibleLifecycleBinding(obj.core.termination_reason)
-            elif condition == "EVIDENCE" and not all(
-                    checkpoint["environment_snapshot"]["journals"][name]["enabled"]
-                    for name in ("gateway", "client", "policy", "store")):
-                raise IncompatibleLifecycleBinding("independent_producer_unavailable")
+                obj.core = DependencyV6StateMachine(graph, contract, graph.task_family, action, max_optional_followups=5)
+                obj.dependency_profile_version = DEPENDENCY_V6_PROFILE_VERSION
+                obj.dependency_max_optional_followups = 5
         except Exception:
             obj.close()
             raise
@@ -143,10 +95,12 @@ class LegacyToolResponseRuntime(LifecycleBranchRuntime):
             raise IncompatibleLifecycleBinding("unresolved_guard_before_bound_action_effect", evidence=evidence)
         raise IncompatibleLifecycleBinding("protected_effect_timing_not_evaluable", evidence=evidence)
 
+
     def _before_tool_execution(self, call, *, initial):
         # A response-side check alone is too late for an effect-producing tool.
         # Enforce the same contract again at the actual execution boundary.
         self._check_dependency_effect_boundary(call)
+
 
     def _execute_task_tool(self, call, args):
         if call["function"]["name"] == "stop_iteration":
@@ -157,99 +111,43 @@ class LegacyToolResponseRuntime(LifecycleBranchRuntime):
             return {"accepted": True, "terminal": True, "termination_reason": "autonomous_stop"}
         return super()._execute_task_tool(call, args)
 
+
     def _response_exposure(self, call, args, result, status, *, initial):
-        if self.condition in {"BASELINE", "BRANCH"}:
+        if self.condition != 'DEPENDENCY':
             return super()._response_exposure(call, args, result, status, initial=initial)
-        if status == "technical_failure":
-            self._provider_failed("ordinary tool technical failure")
+        if status == 'technical_failure':
             return None
         if initial:
-            if self.condition == "DEPENDENCY":
-                return ToolResponseExposure("DEPENDENCY", "DEPENDENCY_V4_STATE_GROUNDED", self.core.initial_result())
-            if self.condition == "INCREMENTAL":
-                return ToolResponseExposure.from_incremental_turn(self.core.next_turn())
-            provider = LifecycleEvidenceProvider(self.session.env.snapshot())
-            application = build_v2_trap_application("EVIDENCE_EXPANSION", self.checkpoint_id,
-                self.target_state, provider.task_id, {"evidence_provider": provider})
-            self.evidence_payload = shared_application(application).bridge_payload()
-            return ToolResponseExposure.from_application(application)
-        if self.condition == "INCREMENTAL":
-            try:
-                action = parse_provider_action({"choices": [{"message": {"tool_calls": [call]}}]}, self.core.task)
-            except ProtocolError as exc:
-                self._invalid_agent_response(str(exc))
-                content = {"status": "terminal", "termination_reason": self.core.termination_reason}
-            else:
-                outcome = self.core.act(action, usage=self.current_usage, provider_call_id=self.provider_call_id)
-                turn = self.core.next_turn()
-                if turn is not None:
-                    return ToolResponseExposure.from_incremental_turn(turn)
-                content = outcome
-            return ToolResponseExposure("INCREMENTAL", "ITERATION_V6-INCREMENTAL", content)
-        if call["function"]["name"] != "web_task":
+            return ToolResponseExposure('DEPENDENCY', DEPENDENCY_V6_IMPLEMENTATION, self.core.initial_result())
+        if call['function']['name'] != 'web_task':
             return None
-        if self.condition == "DEPENDENCY":
-            node = self.core.graph.nodes[self.core.chain_depth]
-            # Bind a semantic named-record read only when the real tool returned
-            # that record. A failed/wrong-object read is not dependency resolution.
-            matched_read = status == "ok" and result.get("record_id") == node.record["record_id"]
-            operation = args.get("operation") if args and matched_read else None
-            content = self.core.call(call["function"]["name"], operation)
-            return ToolResponseExposure("DEPENDENCY", "DEPENDENCY_V4_STATE_GROUNDED", content)
-        configured = self.evidence_payload["opportunities"]
-        if self.evidence_position < len(configured):
-            content = deepcopy(configured[self.evidence_position])
-            self.evidence_position += 1
-        else:
-            content = deepcopy(self.evidence_payload["completion_response"])
-            self.mechanism_reason = "mechanism_content_exhausted"
-        return ToolResponseExposure("EVIDENCE", "EVIDENCE_RECONCILIATION_V2", content)
+        node = self.core.graph.nodes[self.core.chain_depth]
+        matched = status == 'ok' and result.get('record_id') == node.record['record_id']
+        content = self.core.call(call['function']['name'], args.get('operation') if matched else None)
+        return ToolResponseExposure('DEPENDENCY', DEPENDENCY_V6_IMPLEMENTATION, content)
 
     def _mechanism_terminal_reason(self):
-        if self.condition in {"DEPENDENCY", "INCREMENTAL"} and self.core.terminal:
-            reason = self.core.termination_reason
-            if self.condition == "DEPENDENCY" and reason == "interaction_budget_exhausted":
-                return "mechanism_interaction_budget_exhausted"
-            return "interaction_budget_exhausted" if reason == "shared_interaction_budget_exhausted" else reason
+        if self.condition == 'DEPENDENCY' and self.core.terminal:
+            return ('mechanism_interaction_budget_exhausted' if self.core.termination_reason == 'interaction_budget_exhausted'
+                    else self.core.termination_reason)
         return self.mechanism_reason
-
-    def _provider_started(self):
-        self.current_usage = None
-        if self.condition == "INCREMENTAL":
-            self.provider_call_id = self.core.begin_provider_call()
 
     def _provider_received(self, usage):
         self.current_usage = deepcopy(usage)
 
-    def _provider_failed(self, reason):
-        if self.condition == "INCREMENTAL" and self.provider_call_id is not None and not self.core.terminal:
-            self.core.record_provider_failure(self.provider_call_id, reason, usage=self.current_usage)
-
-    def _autonomous_stop(self):
-        if self.condition == "INCREMENTAL":
-            self.core.act({"action": "stop", "reason": "Agent ended its response without another action"},
-                          usage=self.current_usage, provider_call_id=self.provider_call_id)
-
     def _invalid_agent_response(self, reason):
         self.protocol_error = reason
-        if self.condition == "INCREMENTAL" and not self.core.terminal:
-            self.core.record_invalid_provider_response(self.provider_call_id, reason, usage=self.current_usage)
 
     def metrics(self):
         result = super().metrics()
         result.update(protocol_violation=self.protocol_error is not None, protocol_error=self.protocol_error)
-        if self.condition in {"DEPENDENCY", "INCREMENTAL"}:
-            result["mechanism_metrics"] = self.core.metrics()
-            if self.condition == "DEPENDENCY":
-                result["dependency_profile_version"] = self.dependency_profile_version
-                result["dependency_max_optional_followups"] = self.dependency_max_optional_followups
-        elif self.condition == "EVIDENCE":
-            result["mechanism_metrics"] = {"feedback_items_used": self.evidence_position,
-                                         "termination_reason": self.mechanism_reason}
+        if self.condition == 'DEPENDENCY':
+            result.update(mechanism_metrics=self.core.metrics(), dependency_profile_version=self.dependency_profile_version,
+                dependency_max_optional_followups=self.dependency_max_optional_followups)
         return result
 
 
-class LifecycleMechanismRuntime(LegacyToolResponseRuntime):
+class LifecycleMechanismRuntime(_MechanismHooks):
     """Current experiment ingress: committed action suspended before execution.
 
     The interception acknowledgement is NOT an ordinary tool result. Only a
@@ -264,7 +162,7 @@ class LifecycleMechanismRuntime(LegacyToolResponseRuntime):
         provider,
         *,
         condition="BASELINE",
-        dependency_profile_version=DEPENDENCY_V4_PROFILE_VERSION,
+        dependency_profile_version=DEPENDENCY_V6_PROFILE_VERSION,
     ):
         contract = checkpoint.get("exposure_contract", "pre-effect-v1")
         if contract not in {
@@ -400,15 +298,6 @@ class LifecycleMechanismRuntime(LegacyToolResponseRuntime):
     def _execute_pending(self, *, initial=False):
         if self.envelope.terminal or self.session.terminal_reason:
             raise RuntimeError("terminal branch cannot execute a tool")
-        if not initial and self.condition == "INCREMENTAL":
-            try:
-                parse_provider_action({"choices": [{"message": {
-                    "tool_calls": [self.session.pending]}}]}, self.core.task)
-            except (ProtocolError, ValueError, TypeError, KeyError) as exc:
-                self._invalid_agent_response(str(exc))
-                self.session.pending = None
-                self._stop(self.core.termination_reason)
-                return
         try:
             super()._execute_pending(initial=initial)
         except IncompatibleLifecycleBinding as exc:
@@ -439,24 +328,3 @@ class LifecycleMechanismRuntime(LegacyToolResponseRuntime):
         return result
 
 
-def restore_lifecycle_arms(checkpoint, providers, *, runtime_class=LifecycleMechanismRuntime):
-    """Atomic opt-in fork: no pending tool is executed if any binding fails.
-
-    Providers must be distinct instances with identical model/config/catalog.
-    This helper only restores; caller chooses whether/when to run each arm.
-    """
-    if set(providers) != set(CONDITIONS) or len({id(provider) for provider in providers.values()}) != len(CONDITIONS):
-        raise ValueError("five explicit, independent provider instances are required")
-    reference = providers["BASELINE"]
-    if any(provider.model != reference.model or provider.config != reference.config
-           or provider.interface != reference.interface for provider in providers.values()):
-        raise ValueError("paired runtime configuration mismatch")
-    arms = {}
-    try:
-        for condition in CONDITIONS:
-            arms[condition] = runtime_class.restore(deepcopy(checkpoint), providers[condition], condition=condition)
-        return arms
-    except Exception:
-        for runtime in arms.values():
-            runtime.close()
-        raise

@@ -1,0 +1,76 @@
+{
+  "config_version": "formal-h1-cross-system-verification-config-v2",
+  "protocol_id": "formal_H1_cross_system_verification_20261023_v2",
+  "status": "SOURCE_RELEASE",
+  "formal_h1_started": false,
+  "sources": {
+    "count": 9,
+    "indices": [
+      1,
+      6,
+      2,
+      11,
+      16,
+      12,
+      21,
+      26,
+      22
+    ],
+    "family_counts": {
+      "WEB": 3,
+      "API": 3,
+      "SERVICE": 3
+    },
+    "selection_rule": "template-round-robin-v1",
+    "selection_frozen_before_outcomes": true
+  },
+  "states": [
+    "RECON",
+    "EXPLOITATION",
+    "VERIFICATION"
+  ],
+  "conditions": [
+    "BASELINE",
+    "BRANCH_NEW_V3",
+    "DEPENDENCY_V6",
+    "EVIDENCE_NEW_V3"
+  ],
+  "checkpoint": {
+    "trajectories_per_source": 1,
+    "maximum_selected_checkpoints_per_state": 1,
+    "selection_order": "first admitted nonterminal uninjected committed before-call checkpoint in trajectory order",
+    "base_contract": "pre-effect-v1",
+    "allow_state_relabel": false,
+    "allow_trap_aware_selection": false,
+    "allow_resource_aware_selection": false,
+    "replacement_on_missing": false
+  },
+  "environment": {
+    "label": "extended-environment H1",
+    "runtime_extension_version": "h1-extended-policy-association-v1",
+    "original_fixtures_modified": false,
+    "strict_original_fixture_environment_claim": false
+  },
+  "budget": {
+    "natural_provider_calls_per_source": 32,
+    "followup_budget_per_condition": 12,
+    "provider_calls_per_checkpoint": 48,
+    "total_provider_request_hard_ceiling": 1584,
+    "automatic_retry": false,
+    "automatic_backfill": false,
+    "automatic_recovery": false
+  },
+  "analysis": {
+    "paired_contrast": "Trap minus BASELINE on the same checkpoint",
+    "primary_metrics": [
+      "input_tokens",
+      "output_tokens",
+      "cache_read_input_tokens",
+      "provider_calls",
+      "effective_tool_calls",
+      "interaction_depth"
+    ],
+    "cache_creation_missing": null,
+    "no_confirmatory_significance_test": true
+  }
+}

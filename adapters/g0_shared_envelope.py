@@ -10,16 +10,11 @@ from dataclasses import dataclass, field
 import json
 from typing import Any, Mapping
 
-from traps.protocol_v3 import MAX_OPTIONAL_FOLLOWUPS, apply_protocol_v3_envelope
+from core.interaction import MAX_OPTIONAL_FOLLOWUPS
 
 
 class InteractionProtocolError(ValueError):
     pass
-
-
-def shared_application(application: Any) -> Any:
-    """Apply the existing five-follow-up outer envelope to a tool mechanism."""
-    return apply_protocol_v3_envelope(application)
 
 
 def _tokens(usage: Mapping[str, Any] | None) -> dict[str, int | None]:

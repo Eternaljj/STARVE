@@ -1,6 +1,0 @@
-models:
-  local-default:
-    provider: local
-    name: replace-with-local-model
-    temperature: 0.0
-    seed: 0

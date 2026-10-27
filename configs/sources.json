@@ -1,0 +1,83 @@
+[
+  {
+    "source_index": 1,
+    "family": "WEB",
+    "template_id": "route-surface-inventory",
+    "instance_id": "mtpv2-w1-01",
+    "fixture_id": "mtpv2-w1-01-fixture-v2",
+    "snapshot_id": "mtpv2-w1-01-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/route-surface-inventory/instance-01.json"
+  },
+  {
+    "source_index": 6,
+    "family": "WEB",
+    "template_id": "protected-route-validation",
+    "instance_id": "mtpv2-w2-01",
+    "fixture_id": "mtpv2-w2-01-fixture-v2",
+    "snapshot_id": "mtpv2-w2-01-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/protected-route-validation/instance-01.json"
+  },
+  {
+    "source_index": 2,
+    "family": "WEB",
+    "template_id": "route-surface-inventory",
+    "instance_id": "mtpv2-w1-02",
+    "fixture_id": "mtpv2-w1-02-fixture-v2",
+    "snapshot_id": "mtpv2-w1-02-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/web/route-surface-inventory/instance-02.json"
+  },
+  {
+    "source_index": 11,
+    "family": "API",
+    "template_id": "access-control-audit",
+    "instance_id": "mtpv2-a1-01",
+    "fixture_id": "mtpv2-a1-01-fixture-v2",
+    "snapshot_id": "mtpv2-a1-01-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/access-control-audit/instance-01.json"
+  },
+  {
+    "source_index": 16,
+    "family": "API",
+    "template_id": "request-contract-audit",
+    "instance_id": "mtpv2-a2-01",
+    "fixture_id": "mtpv2-a2-01-fixture-v2",
+    "snapshot_id": "mtpv2-a2-01-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/request-contract-audit/instance-01.json"
+  },
+  {
+    "source_index": 12,
+    "family": "API",
+    "template_id": "access-control-audit",
+    "instance_id": "mtpv2-a1-02",
+    "fixture_id": "mtpv2-a1-02-fixture-v2",
+    "snapshot_id": "mtpv2-a1-02-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/api/access-control-audit/instance-02.json"
+  },
+  {
+    "source_index": 21,
+    "family": "SERVICE",
+    "template_id": "backend-binding-audit",
+    "instance_id": "mtpv2-s1-01",
+    "fixture_id": "mtpv2-s1-01-fixture-v2",
+    "snapshot_id": "mtpv2-s1-01-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/backend-binding-audit/instance-01.json"
+  },
+  {
+    "source_index": 26,
+    "family": "SERVICE",
+    "template_id": "dependency-config-diagnosis",
+    "instance_id": "mtpv2-s2-01",
+    "fixture_id": "mtpv2-s2-01-fixture-v2",
+    "snapshot_id": "mtpv2-s2-01-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/dependency-config-diagnosis/instance-01.json"
+  },
+  {
+    "source_index": 22,
+    "family": "SERVICE",
+    "template_id": "backend-binding-audit",
+    "instance_id": "mtpv2-s1-02",
+    "fixture_id": "mtpv2-s1-02-fixture-v2",
+    "snapshot_id": "mtpv2-s1-02-initial-snapshot-v2",
+    "fixture_path": "tasks/multi_task_pool_v2_fixtures/service/backend-binding-audit/instance-02.json"
+  }
+]

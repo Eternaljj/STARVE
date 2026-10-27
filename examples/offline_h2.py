@@ -8,11 +8,11 @@ import socket
 import tempfile
 from unittest.mock import patch
 
-from h1_cross_system_20261023.runner import materialize_runtime, selected_sources
-from h1_deepseek_v4_pro_extended_20261022.extended_v3_environment import (
+from h1.runner import materialize_runtime, selected_sources
+from tasks.extended_environment import (
     ExtendedEvidenceRepository,
 )
-from starve_h2_final_dsv4_9source_20261023 import runner as h2
+from h2 import runtime as h2
 
 
 def main() -> int:
@@ -39,7 +39,7 @@ def main() -> int:
             repository = ExtendedEvidenceRepository(fixture_root)
             rows = h2.full_state_smokes(config, representatives, repository)
     report = {
-        "release_version": "github-source-v1",
+        "release_version": "github-core-v3",
         "provider_free": True,
         "mock_responses": True,
         "real_provider_requests": 0,

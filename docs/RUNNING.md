@@ -1,49 +1,50 @@
-# 运行与复现
+# 运行与分析
 
-所有命令在仓库根目录执行。输出目录必须使用新名称。安装步骤见根目录 README。
+在源码根目录运行，输出目录必须使用新名称。依赖安装见根目录 README。
 
-## 离线入口
+## 离线验证
 
 ```bash
-python -m h1_cross_system_20261023.runner --preflight-only --output outputs/h1-preflight
-python -m examples.offline_h2 --output outputs/h2-demo
 python -m pytest -q
+python -m h1.runner --preflight-only --output outputs/h1-preflight
+python -m h2.runner --preflight-only --output outputs/h2-preflight
+python -m examples.offline_h2 --output outputs/h2-demo
 ```
 
-H1 准入验证九个 source 的本地环境、状态与四条件分支。H2 演示调用当前五策略运行时，在 WEB/API/SERVICE 各一个本地任务上运行脚本响应；网络连接在演示过程中被禁止。其 Token 和模型决策属于 Mock，不作为正式研究结果。
+H1 检查九个选定任务、27 个 checkpoint 和 108 个条件。H2 检查 WEB/API/SERVICE 各一个代表任务的五种策略；每条脚本响应轨迹覆盖三个正式状态。Mock usage 和脚本选择仅用于验证接线。
 
-跨模型离线准入入口：
+## 共用模型配置
+
+`configs/provider.json` 同时供 H1/H2 读取。`LLM_MODEL` 和 `LLM_BASE_URL` 环境变量可以覆盖文件中的模型与地址；密钥从 `LLM_API_KEY` 读取。`.env.example` 仅列出变量，程序不会自动加载该文件。
+
+当前内置接入为 Anthropic Messages 兼容协议，实际请求地址为 `<LLM_BASE_URL>/v1/messages`。模型名称可切换，但服务端必须兼容该接口及工具调用协议。其他协议需要实现对应适配器。采样温度保持 0，输出上限 8192，工具调用串行，无自动重试。
+
+H1 先执行单任务真实检查，再运行完整实验：
 
 ```bash
-python -m h1_gpt_cross_model_6source_20261024.runner --preflight-only
-python -m h1_claude_cross_model_6source_20261024.runner --preflight-only
-python -m h1_glm_5_3_flash_cross_model_6source_20261025.runner --preflight-only
+python -m h1.runner --one-source-preflight 1 --output outputs/h1-live-check
+python -m h1.runner --start --output outputs/h1-live
+python -m h1.analyze outputs/h1-live/live
 ```
 
-这些模型入口还报告当前凭证准备情况。没有凭证时，必须区分本地检查通过与真实模型准入。
+H1 完整执行结束后也会自动分析本轮数据。报告根据当前记录生成。
 
-## 真实模型实验
+H2 按指定预算启动五策略完整轨迹：
 
-对应配置保留原实验的模型标识、路由、预算和停止条件。配置不包含密钥，按所选入口从环境变量读取：
+```bash
+python -m h2.runner --start --source-index 1 --budget 20 --output outputs/h2-live
+```
 
-| 入口 | 凭证环境变量 |
-| --- | --- |
-| H1 DeepSeek / Anthropic Messages 路由 | `P0A_AUTH_TOKEN` |
-| H1 GPT | `H1_P_GPT_API_KEY` |
-| H1 Claude | `H1_P_CLAUDE_API_KEY` |
-| H1 GLM | `H1_P_GLM_API_KEY` |
-| H2 当前 DeepSeek 五策略 | `DS_V4_H1_API_KEY` |
+可选预算为 20、30。省略 `--source-index` 时运行 `configs/sources.json` 中全部九个任务。每条轨迹保存独立请求日志与 `trajectory.json`，总览写入 `summary.json`。技术失败或协议错误会停止当前批次，已产生的记录保留。
 
-`.env.example` 只列变量名，脚本不会自动读取它。设置变量后，H1 各模型入口通过显式 `--start` 开始新的真实实验。真实请求会消耗所选 Provider 的额度。代码保存请求日志、usage、环境效果和停止原因，并执行预算约束。
+## 本次源码整理边界
 
-H2 正式五策略启动器位于 `starve_h2_final_dsv4_9source_20261023/runner.py`，支持 `--preflight-only`、`--start`、`--config` 和 `--output`。其中 `--preflight-only` 包含真实路由检查，不等同于发布版离线演示。该启动器保留原实验的路由证据和冻结准入要求，需提供配置引用的历史准入记录；未提供这些记录时应使用离线演示检查机制，不能直接声称正式实验可复现。
+模型专属实验启动器、批次配置、历史比较器及重复任务副本已移出当前源码版。共用任务环境与三种 Trap 的必要依赖保留。旧批次恢复、原生 Agent SDK 会话恢复及历史结果比较可从整理前的完整备份取得。
 
-## 可选原生 Agent 会话
+本地离线验证不代表真实模型路由、响应与费用已经验证；本次整理未执行真实模型请求。
 
-`p0a_pentestgpt/checkpoint.py` 和 `claude_boundary.py` 保存原生会话捕获/恢复实现。这部分依赖原有 PentestGPT 环境中的 `unified_agent`、`claude_agent_sdk` 及其匹配接口，核心 requirements 不包含它们。当前 H1 HTTP Provider、H2 本地环境和离线测试均可独立运行；只有调用原生会话功能时才需要该外部环境。
+## Trap 版本
 
-## 历史分析数据
+仅支持 BRANCH_NEW_V3、DEPENDENCY_V6、EVIDENCE_NEW_V3。旧版 Branch、Dependency、Evidence 及 Incremental 的实现和比较入口已删除。旧版本源码保存在源码目录外的只读备份中。
 
-各分析器接收本轮实验的 JSON/JSONL/CSV 记录。部分跨模型分析函数额外读取配置中的历史 `pair_ledger.json`；这些数据另行分发。随源码保留的历史比较测试在缺少该账本时明确跳过，其余主线测试继续执行。
-
-`formal_H1_multitask_v3_2_freeze_manifest.json` 保留原协议及 source schedule，其中历史文件元数据属于原工作区记录。发布版路径整理有修改记录，不能将原元数据直接当作发布版冻结记录；新实验应保存自己的版本、时间戳、只读权限和修改记录。
+共用图契约与交互窗口位于 `core/dependency.py`、`core/interaction.py`、`adapters/runtime_support.py`。普通计划提交接口位于 `core/plan.py`，其配置为 `configs/plan_interface.json`。

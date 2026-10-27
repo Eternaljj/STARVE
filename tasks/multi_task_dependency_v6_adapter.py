@@ -12,7 +12,7 @@ import adapters.lifecycle_branch_runtime as branch_module
 import adapters.lifecycle_mechanism_runtime as mechanism_module
 import adapters.lifecycle_trap_bindings as binding_module
 from adapters.lifecycle_web_behavior import web_behavior_evidence
-from tasks.multi_task_pool_v3_dependency_v5_adapter import (
+from tasks.dependency_records import (
     MultiTaskDependencyV5Environment, MultiTaskDependencyV5SessionAdapter,
     build_v5_dependency_material, dependency_v5_context, READ_OPERATIONS,
 )
@@ -198,7 +198,7 @@ def dual_dependency_context(snapshot, repository=None, *, version='V5'):
                         (binding_module, 'provision_material', provision),
                         (binding_module, 'validate_consumer', validate),
                         (mechanism_module, 'dependency_binding', bind),
-                        (mechanism_module, 'DependencyV4StateMachine', DependencyV6StateMachine)]
+                        (mechanism_module, 'DependencyV6StateMachine', DependencyV6StateMachine)]
         elif version != 'V5':
             raise ValueError('unknown dependency version')
         previous = [(module, name, getattr(module, name)) for module, name, _ in changes]

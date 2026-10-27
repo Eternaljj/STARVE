@@ -1,64 +1,55 @@
 # H1/H2 Agent Resource Defense
 
-用于研究 Agent 在受控本地任务中的资源消耗、状态与干预机制关系。包含任务环境、状态观察、工具执行边界、三种 Trap、H1 配对实验、H2 完整轨迹实验和分析代码。
+研究本地受控 Agent 任务中的状态、资源消耗与干预机制。当前为精简源码版 `github-core-v3`（2026-10-27）：H1、H2 各保留一个共用入口，模型与接口地址通过统一配置切换。
 
-本目录是从研究工作区整理的独立源码发布版 `github-source-v1`，整理日期为 2026-10-26。运行产物与正式研究数据另行保存；离线示例使用脚本响应，输出明确标记为 Mock。
+主要代码：
 
-## 主要实现
+| 入口 | 用途 |
+| --- | --- |
+| `h1/runner.py` | 自然轨迹采集、三个状态 checkpoint、BASELINE 与三个 Trap 的配对执行，局部预算 K=12 |
+| `h1/analyze.py` | 本轮配对记录、资源指标和描述性分析 |
+| `h2/runner.py`、`h2/runtime.py` | 完整轨迹的五策略比较、部署资格、状态优先级与预算 B |
+| `adapters/llm_provider.py` | H1/H2 共用的模型配置与 Messages API 接入 |
+| `tasks/`、`traps/`、`adapters/` | 本地任务环境、三种 Trap、状态观察与运行适配 |
+| `p0a_pentestgpt/gateway.py` | 工具参数、执行权限和效果记录 |
 
-| 部分 | 代码入口 | 用途 |
+仅保留三种最新 Trap：
+
+| Trap | 实现文件 | 运行适配 |
 | --- | --- | --- |
-| H1 主线 | `h1_cross_system_20261023/runner.py` | 同一自然轨迹采集 RECON、EXPLOITATION、VERIFICATION checkpoint；同一 checkpoint 执行基线和三个 Trap，局部预算 K=12 |
-| GPT / Claude / GLM | `h1_gpt_cross_model_6source_20261024/`、`h1_claude_cross_model_6source_20261024/`、`h1_glm_5_3_flash_cross_model_6source_20261025/` | 复用 H1 路径，分别处理模型协议、请求记账和分析 |
-| H2 当前五策略 | `starve_h2_final_dsv4_9source_20261023/runner.py` | NO_TRAP、三个固定 Trap、STATE_AWARE_FEASIBLE；按完整轨迹计算预算 B |
-| H2 受控接入 | `h2/pentestgpt_dynamic_selection_20261023.py` | Gateway 约束、状态观察、可部署性检查与按固定优先级回退 |
-| 三种 Trap | `traps/task_relevant_branch_v3.py`、`traps/dependency_v6.py`、`adapters/evidence_new_v3_runtime.py` | BRANCH_NEW_V3、DEPENDENCY_V6、EVIDENCE_NEW_V3 |
-| 任务与边界 | `tasks/`、`p0a_pentestgpt/gateway.py` | WEB/API/SERVICE 本地任务、工具白名单、独立任务判定 |
+| BRANCH_NEW_V3 | `traps/task_relevant_branch_v3.py` | `adapters/lifecycle_branch_new_v3_runtime.py` |
+| DEPENDENCY_V6 | `traps/dependency_v6.py` | `adapters/lifecycle_dependency_v6_runtime.py` |
+| EVIDENCE_NEW_V3 | `traps/evidence_v3.py` | `adapters/evidence_new_v3_runtime.py` |
 
-日期后缀保留了原始实验模块的身份。其他被导入的历史模块属于兼容依赖，阅读顺序见 [代码导览](docs/CODE_GUIDE.md)。
+H2 五策略为 NO_TRAP、FIXED_BRANCH_NEW_V3、FIXED_DEPENDENCY_V6、FIXED_EVIDENCE_NEW_V3、STATE_AWARE_FEASIBLE。旧 Trap 的实现、启动入口及选择器已删除。
 
-## 安装
+## 安装与离线运行
 
-使用 Linux 和 Python 3.11 及以上版本；本次在 Python 3.14.7 上验证。在本目录执行：
+使用 Linux、Python 3.11 及以上版本，在本目录执行：
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
-```
-
-核心运行与离线验证不需要模型凭证。原生 Claude 会话导入/恢复是可选集成，依赖原有 PentestGPT 的 `unified_agent` 和相应 Agent SDK；其依赖边界见 [运行说明](docs/RUNNING.md)。
-
-## 快速开始
-
-运行 H1 离线准入检查：
-
-```bash
-python -m h1_cross_system_20261023.runner --preflight-only --output outputs/h1-preflight
-```
-
-运行当前 H2 三任务族、五策略离线演示：
-
-```bash
-python -m examples.offline_h2 --output outputs/h2-demo
-```
-
-运行测试：
-
-```bash
 python -m pytest -q
+python -m h1.runner --preflight-only --output outputs/h1-preflight
+python -m h2.runner --preflight-only --output outputs/h2-preflight
 ```
 
-每次运行请使用新的输出目录。离线命令不请求真实模型。H2 演示中的三种 Trap 版本与当前五策略主线一致；旧版接线演示 `python run_h2.py --mode mock --budget 12 --output outputs/h2-legacy-demo` 保留用于理解最初的完整轨迹接口，其策略版本不同。
+每次使用新的输出目录。离线检查不请求真实模型；H2 检查覆盖三个任务族、五种策略，共 15 条脚本响应轨迹，结果明确标记为 Mock。独立示例入口为 `python -m examples.offline_h2 --output outputs/h2-demo`。
 
-## 数据与复现
+## 模型配置
 
-源码包含运行所需的本地任务 fixture、选样记录和实验配置。既有配置中的历史结果路径属于原实验的证据引用，相关结果不随源码分发。
+修改 `configs/provider.json`，或通过环境变量设置 `LLM_MODEL`、`LLM_BASE_URL`、`LLM_API_KEY`。H1/H2 使用同一份配置；当前内置传输支持 Anthropic Messages 兼容接口，地址以 `/v1/messages` 拼接。配置中的示例模型与域名需要替换为实际路由。
 
-重新运行 H1 可产生新的实验记录；跨模型历史结果比较需要额外提供对应 `pair_ledger.json`。正式 H2 启动器还会核对原批次的路由准入记录及冻结元数据，源码发布本身不能替代这些准入材料。离线演示可独立执行，用于验证核心机制接线。详见 [运行说明](docs/RUNNING.md) 与 [验证记录](docs/VALIDATION.md)。
+真实模型执行需要显式启动：
 
-## 放到 GitHub
+```bash
+python -m h1.runner --one-source-preflight 1 --output outputs/h1-live-check
+python -m h1.runner --start --output outputs/h1-live
+python -m h2.runner --start --source-index 1 --budget 20 --output outputs/h2-live
+```
 
-新建 GitHub 仓库后，将**本目录中的内容**上传到仓库根目录，使 `README.md` 位于首页。也可解压配套源码包后上传。`.gitignore` 已配置本地凭证、虚拟环境、缓存和实验输出的忽略规则。
+H2 省略 `--source-index` 时运行全部九个选定任务；每个任务分别运行五种策略。真实执行会消耗所配置模型的额度。其他接口协议需提供对应适配器。
 
-仓库链接格式为 `https://github.com/<你的账号>/H1H2-Agent-Resource-Defense`；创建并上传后即可在论文、报告或项目说明中引用。发布前可按作者实际意愿补充作者信息及许可证，当前整理未代替作者选择授权条款。
+运行与分析见 [运行说明](docs/RUNNING.md)，代码阅读顺序见 [代码导览](docs/CODE_GUIDE.md)，本次验证见 [验证记录](docs/VALIDATION.md)。

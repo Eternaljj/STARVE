@@ -11,12 +11,11 @@ import json
 from time import monotonic
 from typing import Any
 
-from adapters.g0_shared_envelope import SharedInteractionEnvelope, shared_application
+from adapters.g0_shared_envelope import SharedInteractionEnvelope
 from adapters.lifecycle_state_collector import STATE_PROTOCOL_VERSION
 from adapters.tool_response_exposure import EXPOSURE_BOUNDARY, ToolResponseExposure, compose_tool_response
-from run_lifecycle_v2_feasibility import INTERFACE_VERSION, Session, neutral_interface
-from traps.protocol_v3 import MAX_OPTIONAL_FOLLOWUPS
-from traps.v2 import BRANCH_V2_IMPLEMENTATION
+from core.lifecycle_session import INTERFACE_VERSION, Session, neutral_interface
+from core.interaction import MAX_OPTIONAL_FOLLOWUPS
 
 
 class LifecycleBranchRuntime:
@@ -55,18 +54,7 @@ class LifecycleBranchRuntime:
         obj = cls()
         obj.application = None
         if application is not None:
-            payload = shared_application(application).bridge_payload()
-            tools = {item["function"]["name"] for item in expected_interface["tools"]}
-            if (payload["primitive"] != "BRANCH_EXPANSION"
-                    or payload["implementation"] != BRANCH_V2_IMPLEMENTATION
-                    or payload.get("state_label") != checkpoint["state"]
-                    or payload.get("recommended_tool") not in tools
-                    or payload.get("initial_response", {}).get("status") != "candidate_catalog"
-                    or len(payload.get("opportunities", [])) != 4):
-                raise ValueError("application must be a validated BRANCH V2 binding for this runtime")
-            # Build via the original builder/provider before calling this ingress.
-            # This layer does not replace that builder's legality validation.
-            obj.application = payload
+            raise ValueError('restore a latest Trap through its explicit carrier')
         obj.session = Session.restore(deepcopy(checkpoint), provider)
         obj.checkpoint_id = checkpoint.get("checkpoint_id")
         obj.condition = "BRANCH" if application is not None else "BASELINE"
@@ -81,7 +69,7 @@ class LifecycleBranchRuntime:
         obj.wall_time = 0.0
         return obj
 
-    # Runtime hooks transport core decisions; the legacy BRANCH defaults stay unchanged.
+    # Shared lifecycle hooks are supplied by the current Trap carriers.
     def _before_tool_execution(self, call, *, initial):
         pass
 
@@ -117,8 +105,7 @@ class LifecycleBranchRuntime:
             raise RuntimeError("initial tool response has already been exposed")
         if any(event["kind"] == "response_prepared" for event in self.lifecycle_events):
             return
-        self.exposure = ToolResponseExposure("BRANCH", BRANCH_V2_IMPLEMENTATION,
-            deepcopy(self.application["initial_response"])) if self.application else None
+        self.exposure = None
         self.lifecycle_events.append({
             "kind": "response_prepared", "condition": self.condition,
             "pending_tool_call": deepcopy(self.session.pending),

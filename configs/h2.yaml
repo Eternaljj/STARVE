@@ -1,9 +1,0 @@
-experiment: H2
-trap: SVP
-intensities:
-  0: {name: baseline, max_rounds: 0, workload: 0, tool_depth: 0, verification_depth: 0}
-  1: {name: low, max_rounds: 2, workload: 1, tool_depth: 1, verification_depth: 0}
-  2: {name: medium, max_rounds: 4, workload: 2, tool_depth: 2, verification_depth: 1}
-  3: {name: high, max_rounds: 6, workload: 3, tool_depth: 3, verification_depth: 2}
-  4: {name: very_high, max_rounds: 8, workload: 4, tool_depth: 4, verification_depth: 3}
-paired_checkpoint_required: true

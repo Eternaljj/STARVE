@@ -9,7 +9,7 @@ from typing import Any
 from urllib import request, error, parse
 
 from adapters.web_route_coverage import build_web_route_coverage_adapter
-from traps.iteration_v6_submission import tool_definition, validate_current_plan
+from core.plan import tool_definition, validate_current_plan
 from adapters.lifecycle_dependency_material import (
     MATERIAL_PROFILE, READ_OPERATIONS, provision_material, consumer_records, validate_consumer,
 )
@@ -53,7 +53,7 @@ def report_schema() -> dict:
 
 
 def plan_task() -> dict:
-    task = deepcopy(build_web_route_coverage_adapter().incremental_task())
+    task = deepcopy(build_web_route_coverage_adapter().plan_task())
     task.update(task_id="lifecycle-security-v2", goal_id="lifecycle-security-v2-coverage",
                 full_initial_prompt="Plan route coverage, classification, sample verification and reporting.")
     return task

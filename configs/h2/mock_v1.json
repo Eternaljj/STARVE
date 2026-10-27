@@ -1,8 +1,0 @@
-{
-  "version": "h2-provider-free-demo-v1",
-  "mode": "mock",
-  "budget": 12,
-  "budget_unit": "provider_requests_from_task_start",
-  "note": "Demo only; no formal main or sensitivity budget selected. CLI --budget supplies the value.",
-  "enable_real_provider": false
-}

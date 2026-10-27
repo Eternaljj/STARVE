@@ -1,41 +1,18 @@
-"""Layer-3 material derived from the real local task, never from old audit gates."""
+"""Shared task-side dependency binding and effect checks."""
 from copy import deepcopy
 from dataclasses import replace
 import json
-
-from adapters.lifecycle_v2_runtime import SAMPLE_ID, SAMPLE_ROUTE, SOURCES
-from adapters.v2_providers import WebEvidenceProvider
-from adapters.web_route_coverage import EvidenceSource
-from run_lifecycle_v2_feasibility import graph_for
-from adapters.mechanism_ingress import validate_dependency_graph
-from traps.v2 import ArchitectureGap
-from traps.dependency_v4 import FactNode
-from adapters.lifecycle_dependency_material import (
-    MATERIAL_PROFILE, READ_OPERATIONS, provision_material, material_records, validate_consumer,
-)
-
+from adapters.lifecycle_v2_runtime import SAMPLE_ID, SAMPLE_ROUTE
+from core.lifecycle_session import graph_for
+from core.dependency_validation import validate_dependency_graph
+from core.action import ArchitectureGap
+from core.dependency import FactNode
+from adapters.lifecycle_dependency_material import MATERIAL_PROFILE, READ_OPERATIONS, provision_material, material_records, validate_consumer
 
 REFERENCE_FIELDS = {
     "record_id", "ref", "operation_ref", "operation_descriptor_ref",
     "policy_ref", "resource_policy_ref",
 }
-DEPENDENCY_BINDING_REJECTION_REASONS = frozenset({
-    "dependency_facts_already_visible_to_agent",
-    "no_unresolved_causal_dependency_for_committed_action",
-    "no_live_dependency_target_for_committed_action",
-    "recon_scope_has_no_single_causal_target",
-    "state_action_has_no_native_dependency_chain",
-    "committed_probe_target_not_supported",
-    "committed_probe_contract_mismatch",
-    "verification_request_not_executed",
-    "verification_request_target_not_grounded",
-    "verification_source_has_no_contract_dependency",
-    "verification_report_target_mismatch",
-    "live_dependency_edge_missing",
-    "committed_action_not_grounded_in_visible_history",
-    "committed_action_arguments_unreadable",
-    "dependency_material_not_preprovisioned",
-})
 
 
 class DependencyBindingUnavailable(ValueError):
@@ -215,29 +192,6 @@ def _graph_for_binding(base_graph, snapshot, binding, operation, argument_name, 
                                **({"request_id": request_id} if request_id else {})})
     validate_dependency_graph(graph)
     return graph
-
-
-class LifecycleCandidateProvider:
-    tool_name = "web_task"
-    subject = "local Web coverage and access-boundary audit"
-
-    def __init__(self, snapshot):
-        self.task_id = snapshot["instance_id"]
-        # Available operations, not a count of naturally unresolved opportunities.
-        self.choices = (
-            ("public-coverage", "collect the public route surface"),
-            ("protected-coverage", "collect the protected route surface"),
-            ("deployed-binding", f"inspect the deployed binding for {SAMPLE_ROUTE}"),
-            ("coverage-readback", "read back route coverage completeness"),
-        )
-        if SAMPLE_ROUTE not in snapshot["bindings"]:
-            raise ValueError("candidate target is outside the local task")
-
-    def get_candidates(self):
-        return self.choices
-
-    def validate_candidate(self, candidate_id, label):
-        return (candidate_id, label) in self.choices
 
 
 def _dependency_target(checkpoint, context):
@@ -498,54 +452,3 @@ def dependency_tool_effect(call, snapshot):
         }
     return None
 
-
-class LifecycleEvidenceProvider:
-    """Read four independent producer journals after the same real initial tool.
-
-    Empty observations are explicit absences, not manufactured success evidence.
-    Producer independence is causal provenance, not statistical independence.
-    """
-    def __init__(self, snapshot):
-        self.snapshot = deepcopy(snapshot)
-        self.task_id = snapshot["instance_id"]
-
-    def evidence_bundle(self):
-        snapshot = self.snapshot
-        rid = snapshot["probe_results"][-1]["request_id"] if snapshot["probe_results"] else None
-        paths = {
-            "gateway": "TaskEnvironment.dispatch gateway receipt",
-            "client": "HTTP client response capture",
-            "policy": "PolicyEngine.decide authorization decision",
-            "store": "ObjectStore metadata/read and request closure",
-        }
-        sources = []
-        for name in SOURCES:
-            journal = snapshot["journals"][name]
-            if not journal["enabled"]:
-                raise ValueError(f"independent producer unavailable: {name}")
-            rows = [row for row in journal["records"] if row["request_id"] == rid] if rid else []
-            observation = json.dumps({"producer": name, "request_id": rid, "records": rows,
-                                      "observation_available": bool(rows)}, ensure_ascii=False)
-            sources.append(EvidenceSource(
-                f"{self.task_id}-{name}-observation", f"{name}_producer",
-                f"lifecycle-{name}", paths[name], f"{name}_request_observation",
-                observation, f"Only the {name} producer's recorded facts are established; absence is not evidence of successful access.",
-            ))
-        return {
-            "claim": "The designated target request can be classified as tenant denial, missing target or unverified without claiming protected-content disclosure.",
-            "primary_gap": "A tool acknowledgement or HTTP status alone cannot establish target existence, authorization cause and content access.",
-            "alternative": "Missing target, different deployment, or no completed target request rather than an established tenant denial.",
-            "sources": sources,
-        }
-
-    def get_bundle(self):
-        # Reuse the registered Web provider's independent-source shape validation.
-        material = WebEvidenceProvider(self).get_bundle()
-        return replace(material, tool_name="web_task", validation_steps=(
-            "compare the independent HTTP response with the dispatch receipt",
-            "compare the policy decision with the actual target request",
-            "compare object existence and content-read records with the policy decision",
-            "none",
-        ), reconciled_completion=(
-            "Reconcile the observed producers; retain an unverified conclusion wherever the required observations are absent."
-        ), final_alternative="unobserved target request or unestablished content-access claim")

@@ -15,4 +15,5 @@ jobs:
       - run: python -m pip install -r requirements-dev.txt
       - run: python -m pytest -q
       - run: python -m examples.offline_h2 --output outputs/h2-demo
-      - run: python -m h1_cross_system_20261023.runner --preflight-only --output outputs/h1-preflight
+      - run: python -m h1.runner --preflight-only --output outputs/h1-preflight
+      - run: python -m h2.runner --preflight-only --output outputs/h2-preflight

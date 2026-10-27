@@ -1,0 +1,11 @@
+{
+  "interface": "anthropic-messages-v1",
+  "model_id": "your-model",
+  "base_url": "https://api.example.com/anthropic",
+  "credential_source": "LLM_API_KEY",
+  "temperature": 0.0,
+  "max_tokens": 8192,
+  "timeout_seconds": 180,
+  "parallel_tool_calls": false,
+  "stream": false
+}

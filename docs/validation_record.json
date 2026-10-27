@@ -1,26 +1,46 @@
 {
-  "release_version": "github-source-v1",
-  "validated_at": "2026-10-26T11:54:39.198748+00:00",
+  "release_version": "github-core-v3",
+  "validation_date": "2026-10-27",
+  "timezone": "Asia/Shanghai",
   "execution_directory": "independent copy outside the original research workspace",
   "python_version": "3.14.7",
   "platform": "Linux",
+  "supported_traps": [
+    "BRANCH_NEW_V3",
+    "DEPENDENCY_V6",
+    "EVIDENCE_NEW_V3"
+  ],
   "tests": {
-    "passed": 89,
-    "skipped": 1,
-    "subtests_passed": 24,
-    "skip_reason": "Historical DeepSeek pair ledger is distributed separately."
+    "passed": 34,
+    "skipped": 0
   },
   "h1_provider_free_admission": {
     "passed": true,
+    "sources": 9,
+    "checkpoints": 27,
+    "conditions": 108,
     "real_provider_requests": 0
   },
-  "h2_offline_demo": {
+  "h2_offline_preflight": {
     "passed": true,
+    "budget": 30,
     "trajectories": 15,
-    "families": 3,
-    "strategies": 5,
     "all_three_states_observed_in_each_trajectory": true,
     "real_provider_requests": 0
   },
-  "common_credential_patterns_found": 0
+  "h2_offline_example": {
+    "passed": true,
+    "budget": 20,
+    "trajectories": 15,
+    "real_provider_requests": 0
+  },
+  "latest_trap_regressions": {
+    "dependency_guard": true,
+    "out_of_order_reads": true,
+    "independent_restore": true,
+    "evidence_decision_reserve": true,
+    "retired_selectors_rejected": true,
+    "full_task_completion": true
+  },
+  "live_external_provider_verified": false
 }

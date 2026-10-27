@@ -27,7 +27,7 @@ def paired(rows):
             'token_ratio_vs_no_trap': a/b if a is not None and b is not None and b > 0 else None})
     return result
 
-def comparison_pairs(rows, left='STATE_AWARE', right='FIXED_DEPENDENCY'):
+def comparison_pairs(rows, left='STATE_AWARE_FEASIBLE', right='FIXED_DEPENDENCY_V6'):
     index = {(r['source_id'], r['config']['budget'], r['strategy']): r for r in rows}
     return [(r, index[(r['source_id'], r['config']['budget'], right)]) for r in rows
         if r['strategy'] == left and (r['source_id'], r['config']['budget'], right) in index]

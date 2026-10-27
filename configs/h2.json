@@ -1,0 +1,5 @@
+{
+  "protocol_id": "h2-shared-five-strategy-v2",
+  "budgets": [20, 30],
+  "strategies": ["NO_TRAP", "FIXED_BRANCH_NEW_V3", "FIXED_DEPENDENCY_V6", "FIXED_EVIDENCE_NEW_V3", "STATE_AWARE_FEASIBLE"]
+}

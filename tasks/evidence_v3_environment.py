@@ -5,7 +5,7 @@ import json
 
 from adapters.lifecycle_mechanism_runtime import lifecycle_interaction_interface
 from tasks.multi_task_pool_v1_adapter import FixtureRepository
-from tasks.multi_task_pool_v3_dependency_v5_adapter import (
+from tasks.dependency_records import (
     MultiTaskDependencyV5Environment, MultiTaskDependencyV5SessionAdapter,
 )
 
