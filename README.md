@@ -6,14 +6,13 @@
 
 | 入口 | 用途 |
 | --- | --- |
-| `h1/runner.py` | 自然轨迹采集、三个状态 checkpoint、BASELINE 与三个 Trap 的配对执行，局部预算 K=12 |
+| `h1/runner.py` | 自然轨迹采集、三个状态 checkpoint、BASELINE 与三个 Trap 的配对执行，局部预算 K |
 | `h1/analyze.py` | 本轮配对记录、资源指标和描述性分析 |
 | `h2/runner.py`、`h2/runtime.py` | 完整轨迹的五策略比较、部署资格、状态优先级与预算 B |
 | `adapters/llm_provider.py` | H1/H2 共用的模型配置与 Messages API 接入 |
 | `tasks/`、`traps/`、`adapters/` | 本地任务环境、三种 Trap、状态观察与运行适配 |
 | `p0a_pentestgpt/gateway.py` | 工具参数、执行权限和效果记录 |
 
-仅保留三种最新 Trap：
 
 | Trap | 实现文件 | 运行适配 |
 | --- | --- | --- |
