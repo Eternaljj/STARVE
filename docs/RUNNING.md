@@ -37,14 +37,5 @@ python -m h2.runner --start --source-index 1 --budget 20 --output outputs/h2-liv
 
 可选预算为 20、30。省略 `--source-index` 时运行 `configs/sources.json` 中全部九个任务。每条轨迹保存独立请求日志与 `trajectory.json`，总览写入 `summary.json`。技术失败或协议错误会停止当前批次，已产生的记录保留。
 
-## 本次源码整理边界
 
-模型专属实验启动器、批次配置、历史比较器及重复任务副本已移出当前源码版。共用任务环境与三种 Trap 的必要依赖保留。旧批次恢复、原生 Agent SDK 会话恢复及历史结果比较可从整理前的完整备份取得。
 
-本地离线验证不代表真实模型路由、响应与费用已经验证；本次整理未执行真实模型请求。
-
-## Trap 版本
-
-仅支持 BRANCH_NEW_V3、DEPENDENCY_V6、EVIDENCE_NEW_V3。旧版 Branch、Dependency、Evidence 及 Incremental 的实现和比较入口已删除。旧版本源码保存在源码目录外的只读备份中。
-
-共用图契约与交互窗口位于 `core/dependency.py`、`core/interaction.py`、`adapters/runtime_support.py`。普通计划提交接口位于 `core/plan.py`，其配置为 `configs/plan_interface.json`。
