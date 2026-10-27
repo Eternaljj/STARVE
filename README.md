@@ -51,4 +51,4 @@ python -m h2.runner --start --source-index 1 --budget 20 --output outputs/h2-liv
 
 H2 省略 `--source-index` 时运行全部九个选定任务；每个任务分别运行五种策略。真实执行会消耗所配置模型的额度。其他接口协议需提供对应适配器。
 
-运行与分析见 [运行说明](docs/RUNNING.md)，代码阅读顺序见 [代码导览](docs/CODE_GUIDE.md)，本次验证见 [验证记录](docs/VALIDATION.md)。
+运行与分析见 [运行说明](docs/RUNNING.md)，代码阅读顺序见 [代码导览](docs/CODE_GUIDE.md)。
